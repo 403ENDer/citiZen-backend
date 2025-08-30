@@ -152,7 +152,7 @@ const validateHierarchy = async (
 
     // Check if ward exists in the panchayat
     const wardExists = panchayat.ward_list.some(
-      (ward: any) => ward.ward_id === ward_no
+      (ward: any) => ward._id.toString() === ward_no
     );
     if (!wardExists) {
       return {
@@ -223,6 +223,7 @@ export class AuthController {
         "ward_no",
       ];
       const missingField = validateRequiredFields(req.body, requiredFields);
+
       if (missingField) {
         return createValidationErrorResponse(res, missingField);
       }
@@ -248,7 +249,6 @@ export class AuthController {
           "Phone number already registered"
         );
       }
-
       // Validate hierarchy
       const hierarchyValidation = await validateHierarchy(
         constituency_id,
