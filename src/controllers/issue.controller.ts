@@ -136,6 +136,7 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
     // Handle department logic
     let finalDepartmentId = department_id;
     let aiClassifiedDepartment = null;
+    let aiClassificationsArray: { department: string; email: string | null; subquery: string | null }[] | null = null;
     
     console.log("Environment variables check:");
     console.log("GROQ_API_KEY exists:", !!process.env.GROQ_API_KEY);
@@ -154,7 +155,10 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
           
           // Get classification result
           const classification = await classifyUserQuery(queryText);
-          aiClassifiedDepartment = classification.classification;
+          aiClassificationsArray = classification.classifications || null;
+          aiClassifiedDepartment = aiClassificationsArray && aiClassificationsArray.length > 0
+            ? aiClassificationsArray[0].department
+            : null;
           
           console.log(`AI classified department: ${aiClassifiedDepartment}`);
           
@@ -261,7 +265,7 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
       message: "Issue created successfully",
       data: {
         ...issue.toObject(),
-        aiClassifiedDepartment: aiClassifiedDepartment
+        aiClassifications: aiClassificationsArray,
       },
     });
   } catch (error) {
@@ -361,15 +365,18 @@ export const createBulkIssues = async (req: AuthRequest, res: Response) => {
             const classification = await classifyUserQuery(queryText);
             
             // Find department by name
-            const department = await Department.findOne({ 
-              name: classification.classification 
-            });
+            const firstDeptName = classification.classifications && classification.classifications.length > 0
+              ? classification.classifications[0].department
+              : null;
+            const department = firstDeptName
+              ? await Department.findOne({ name: firstDeptName })
+              : null;
             
             if (department) {
               finalDepartmentId = department._id;
-              console.log(`Auto-assigned to department: ${classification.classification}`);
+              console.log(`Auto-assigned to department: ${firstDeptName}`);
             } else {
-              console.log(`Department not found: ${classification.classification}`);
+              console.log(`Department not found: ${firstDeptName}`);
             }
           } catch (error) {
             console.error("Error in automatic department classification:", error);
