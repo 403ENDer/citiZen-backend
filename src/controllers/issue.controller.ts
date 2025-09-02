@@ -13,6 +13,7 @@ import {
   createNotFoundErrorResponse,
   createInternalErrorResponse,
 } from "../utils/response";
+import { classifyUserQuery } from '../utils/validate_query';
 
 interface AuthRequest extends Request {
   user?: {
@@ -134,12 +135,48 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
 
     // Handle department logic
     let finalDepartmentId = department_id;
+    let aiClassifiedDepartment = null;
+    
+    console.log("Environment variables check:");
+    console.log("GROQ_API_KEY exists:", !!process.env.GROQ_API_KEY);
+    console.log("GROQ_API_KEY length:", process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.length : 0);
+    
     if (!department_id) {
-      // TODO: Implement automatic department finding algorithm
-      // For now, we'll leave it as null and let the user implement the algorithm later
-      console.log(
-        "Department not provided - auto-finding algorithm to be implemented"
-      );
+      try {
+        // Check if GROQ API key is available
+        if (!process.env.GROQ_API_KEY) {
+          console.log("GROQ_API_KEY not found in environment variables. Skipping AI classification.");
+          aiClassifiedDepartment = "AI classification not available - GROQ API key missing";
+        } else {
+          // Combine title and detail for classification
+          const queryText = `${title}. ${detail}`;
+          console.log("Attempting AI classification for query:", queryText);
+          
+          // Get classification result
+          const classification = await classifyUserQuery(queryText);
+          aiClassifiedDepartment = classification.classification;
+          
+          console.log(`AI classified department: ${aiClassifiedDepartment}`);
+          
+          // Try to find department by name and set finalDepartmentId
+          if (aiClassifiedDepartment) {
+            const department = await Department.findOne({ 
+              name: aiClassifiedDepartment 
+            });
+            
+            if (department) {
+              finalDepartmentId = department._id;
+              console.log(`Auto-assigned to department: ${aiClassifiedDepartment}`);
+            } else {
+              console.log(`Department not found: ${aiClassifiedDepartment}`);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Error in automatic department classification:", error);
+        aiClassifiedDepartment = `AI classification failed: ${error instanceof Error ? error.message : 'Unknown error'}`;
+        // Continue without department assignment
+      }
     } else {
       // Validate if the provided department exists
       const department = await Department.findById(department_id);
@@ -150,6 +187,45 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
         });
       }
     }
+    
+    // TODO: Uncomment below logic when department verification is needed
+    /*
+    // Handle department logic
+    let finalDepartmentId = department_id;
+    if (!department_id) {
+      try {
+        // Combine title and detail for classification
+        const queryText = `${title}. ${detail}`;
+        
+        // Get classification result
+        const classification = await classifyUserQuery(queryText);
+        
+        // Find department by name
+        const department = await Department.findOne({ 
+          name: classification.classification 
+        });
+        
+        if (department) {
+          finalDepartmentId = department._id;
+          console.log(`Auto-assigned to department: ${classification.classification}`);
+        } else {
+          console.log(`Department not found: ${classification.classification}`);
+        }
+      } catch (error) {
+        console.error("Error in automatic department classification:", error);
+        // Continue without department assignment
+      }
+    } else {
+      // Validate if the provided department exists
+      const department = await Department.findById(department_id);
+      if (!department) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid department ID provided",
+        });
+      }
+    }
+    */
 
     // Set random priority level
     const priority_level = getRandomPriorityLevel();
@@ -183,7 +259,10 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
     res.status(201).json({
       success: true,
       message: "Issue created successfully",
-      data: issue,
+      data: {
+        ...issue.toObject(),
+        aiClassifiedDepartment: aiClassifiedDepartment
+      },
     });
   } catch (error) {
     console.error("Create issue error:", error);
@@ -274,10 +353,28 @@ export const createBulkIssues = async (req: AuthRequest, res: Response) => {
         // Handle department logic
         let finalDepartmentId = department_id;
         if (!department_id) {
-          // TODO: Implement automatic department finding algorithm
-          console.log(
-            "Department not provided - auto-finding algorithm to be implemented"
-          );
+          try {
+            // Combine title and detail for classification
+            const queryText = `${title}. ${detail}`;
+            
+            // Get classification result
+            const classification = await classifyUserQuery(queryText);
+            
+            // Find department by name
+            const department = await Department.findOne({ 
+              name: classification.classification 
+            });
+            
+            if (department) {
+              finalDepartmentId = department._id;
+              console.log(`Auto-assigned to department: ${classification.classification}`);
+            } else {
+              console.log(`Department not found: ${classification.classification}`);
+            }
+          } catch (error) {
+            console.error("Error in automatic department classification:", error);
+            // Continue without department assignment
+          }
         } else {
           // Validate if the provided department exists
           const department = await Department.findById(department_id);
