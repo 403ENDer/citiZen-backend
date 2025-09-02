@@ -43,20 +43,16 @@ export const getMLADashboard = async (req: AuthRequest, res: Response) => {
         message: "Access denied. MLA role required.",
       });
     }
-
-    if (!validateObjectIdParam(constituencyId, "constituencyId")) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid constituency ID",
-      });
-    }
-
-    const constituency = await Constituency.findById(constituencyId);
-    if (!constituency) {
-      return res.status(404).json({
-        success: false,
-        message: "Constituency not found",
-      });
+    try {
+      const constituency = await Constituency.findById(constituencyId);
+      if (!constituency) {
+        return res.status(404).json({
+          success: false,
+          message: "Constituency not found",
+        });
+      }
+    } catch (error) {
+      return createInternalErrorResponse(res, "Failed to get constituency");
     }
 
     // Compute dynamic counts for panchayats and wards
@@ -314,7 +310,7 @@ export const getMLADashboard = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Get real-time statistics for MLA dashboard
+// Get real-time statistics for MLA dashboard (strict response shape)
 export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
   try {
     const { constituencyId } = req.params;
@@ -342,61 +338,272 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    if (!validateObjectIdParam(constituencyId, "constituencyId")) {
+    const idError = validateObjectIdParam(constituencyId, "constituencyId");
+    if (idError) {
       return res.status(400).json({
         success: false,
-        message: "Invalid constituency ID",
+        message: idError,
       });
     }
 
-    const totalIssues = await Issue.countDocuments({
-      constituency_id: constituencyId,
-    });
+    // Totals
+    const [total_issues, resolved_issues, pending_issues, critical_issues] =
+      await Promise.all([
+        Issue.countDocuments({ constituency_id: constituencyId }),
+        Issue.countDocuments({
+          constituency_id: constituencyId,
+          status: "resolved",
+        }),
+        Issue.countDocuments({
+          constituency_id: constituencyId,
+          status: "pending",
+        }),
+        Issue.countDocuments({
+          constituency_id: constituencyId,
+          priority_level: "high",
+        }),
+      ]);
 
-    const pendingIssues = await Issue.countDocuments({
-      constituency_id: constituencyId,
-      status: "pending",
-    });
-
-    const resolvedIssues = await Issue.countDocuments({
+    // Avg resolution time and user satisfaction
+    const resolvedDocs = await Issue.find({
       constituency_id: constituencyId,
       status: "resolved",
+    }).select("createdAt completed_at satisfaction_score department_id");
+
+    const daysBetween = (start?: Date, end?: Date) => {
+      if (!start || !end) return null;
+      return (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+    };
+    const satisfactionToScore = (s: string | undefined): number | null => {
+      if (!s) return null;
+      const v = String(s).toLowerCase();
+      if (v === "good") return 5;
+      if (v === "average") return 3;
+      if (v === "poor") return 1;
+      return null;
+    };
+
+    const resolutionTimes: number[] = [];
+    const satScores: number[] = [];
+    resolvedDocs.forEach((doc: any) => {
+      const d = daysBetween(doc.createdAt, doc.completed_at);
+      if (d !== null) resolutionTimes.push(d);
+      const s = satisfactionToScore(doc.satisfaction_score);
+      if (s !== null) satScores.push(s);
     });
 
-    const inProgressIssues = await Issue.countDocuments({
-      constituency_id: constituencyId,
-      status: "in_progress",
-    });
+    const avg_resolution_time = resolutionTimes.length
+      ? Number(
+          (
+            resolutionTimes.reduce((a, b) => a + b, 0) / resolutionTimes.length
+          ).toFixed(1)
+        )
+      : 0;
+    const user_satisfaction = satScores.length
+      ? Number(
+          (satScores.reduce((a, b) => a + b, 0) / satScores.length).toFixed(1)
+        )
+      : 0;
 
+    const efficiency =
+      total_issues > 0
+        ? Number(((resolved_issues / total_issues) * 100).toFixed(1))
+        : 0;
+
+    // Monthly trends (last 6 months)
+    const now = new Date();
+    const months: { label: string; start: Date; end: Date }[] = [];
+    for (let i = 5; i >= 0; i--) {
+      const start = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const end = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+      const label = start.toLocaleString("en-US", { month: "short" });
+      months.push({ label, start, end });
+    }
+
+    const monthly_trends = await Promise.all(
+      months.map(async (m) => {
+        const total = await Issue.countDocuments({
+          constituency_id: constituencyId,
+          createdAt: { $gte: m.start, $lt: m.end },
+        });
+        const resolvedInMonth = await Issue.find({
+          constituency_id: constituencyId,
+          status: "resolved",
+          createdAt: { $gte: m.start, $lt: m.end },
+        }).select("createdAt completed_at satisfaction_score");
+        const pending = await Issue.countDocuments({
+          constituency_id: constituencyId,
+          status: "pending",
+          createdAt: { $gte: m.start, $lt: m.end },
+        });
+        const critical = await Issue.countDocuments({
+          constituency_id: constituencyId,
+          priority_level: "high",
+          createdAt: { $gte: m.start, $lt: m.end },
+        });
+
+        const respDays: number[] = [];
+        const sat: number[] = [];
+        resolvedInMonth.forEach((doc: any) => {
+          const d = daysBetween(doc.createdAt, doc.completed_at);
+          if (d !== null) respDays.push(d);
+          const s = satisfactionToScore(doc.satisfaction_score);
+          if (s !== null) sat.push(s);
+        });
+
+        const avg_resolution = respDays.length
+          ? Number(
+              (respDays.reduce((a, b) => a + b, 0) / respDays.length).toFixed(1)
+            )
+          : 0;
+        const satisfaction = sat.length
+          ? Number((sat.reduce((a, b) => a + b, 0) / sat.length).toFixed(1))
+          : 0;
+
+        const resolved = resolvedInMonth.length;
+        return {
+          month: m.label,
+          total,
+          resolved,
+          pending,
+          critical,
+          avg_resolution,
+          satisfaction,
+        };
+      })
+    );
+
+    // Department performance and category breakdown
+    const departments = await Department.find({});
+    const department_performance = await Promise.all(
+      departments.map(async (dept: any) => {
+        const base = {
+          constituency_id: constituencyId,
+          department_id: dept._id,
+        } as any;
+        const [issues, resolved, pending, resolvedDocsDept] = await Promise.all(
+          [
+            Issue.countDocuments(base),
+            Issue.countDocuments({ ...base, status: "resolved" }),
+            Issue.countDocuments({ ...base, status: "pending" }),
+            Issue.find({ ...base, status: "resolved" }).select(
+              "createdAt completed_at satisfaction_score"
+            ),
+          ]
+        );
+
+        const deptTimes: number[] = [];
+        const deptSat: number[] = [];
+        resolvedDocsDept.forEach((doc: any) => {
+          const d = daysBetween(doc.createdAt, doc.completed_at);
+          if (d !== null) deptTimes.push(d);
+          const s = satisfactionToScore(doc.satisfaction_score);
+          if (s !== null) deptSat.push(s);
+        });
+
+        const avg_response = deptTimes.length
+          ? Number(
+              (deptTimes.reduce((a, b) => a + b, 0) / deptTimes.length).toFixed(
+                1
+              )
+            )
+          : 0;
+        const satisfaction = deptSat.length
+          ? Number(
+              (deptSat.reduce((a, b) => a + b, 0) / deptSat.length).toFixed(1)
+            )
+          : 0;
+
+        return {
+          name: dept.name,
+          issues,
+          resolved,
+          pending,
+          avg_response,
+          satisfaction,
+          budget: 0,
+          spent: 0,
+        };
+      })
+    );
+
+    const totalDeptIssues =
+      department_performance.reduce((sum, d) => sum + (d.issues || 0), 0) || 1;
+    const palette = [
+      "#8884d8",
+      "#82ca9d",
+      "#ffc658",
+      "#ff7300",
+      "#8dd1e1",
+      "#a4de6c",
+    ];
+    const category_breakdown = department_performance.map((d, idx) => ({
+      name: d.name,
+      value: Number(((d.issues / totalDeptIssues) * 100).toFixed(1)),
+      color: palette[idx % palette.length],
+      priority:
+        d.issues > 0
+          ? d.resolved / d.issues < 0.6
+            ? "High"
+            : "Medium"
+          : "Low",
+      avg_resolution: d.avg_response,
+    }));
+
+    // Priority distribution
+    const [highCount, normalCount, lowCount] = await Promise.all([
+      Issue.countDocuments({
+        constituency_id: constituencyId,
+        priority_level: "high",
+      }),
+      Issue.countDocuments({
+        constituency_id: constituencyId,
+        priority_level: "normal",
+      }),
+      Issue.countDocuments({
+        constituency_id: constituencyId,
+        priority_level: "low",
+      }),
+    ]);
+    const priority_distribution = [
+      { priority: "high", count: highCount, color: "#e74c3c" },
+      { priority: "normal", count: normalCount, color: "#f1c40f" },
+      { priority: "low", count: lowCount, color: "#2ecc71" },
+    ];
+
+    // Recent issues
     const recentIssues = await Issue.find({ constituency_id: constituencyId })
       .sort({ createdAt: -1 })
       .limit(5)
-      .populate("user_id", "name")
       .populate("department_id", "name");
 
-    const stats = {
-      total_issues: totalIssues,
-      pending_issues: pendingIssues,
-      resolved_issues: resolvedIssues,
-      in_progress_issues: inProgressIssues,
-      resolution_rate:
-        totalIssues > 0 ? (resolvedIssues / totalIssues) * 100 : 0,
-      recent_issues: recentIssues.map((issue: any) => ({
-        id: issue._id,
-        title: issue.title,
-        category: issue.department_id?.name || "Unknown",
-        priority: issue.priority_level,
-        status: issue.status,
-        submitted: issue.createdAt,
-        location: issue.locality,
-      })),
+    const recent_issues = recentIssues.map((issue: any) => ({
+      id: String(issue._id),
+      title: issue.title,
+      category: issue.department_id?.name || "Unknown",
+      priority: issue.priority_level || "normal",
+      status: issue.status,
+      submitted: issue.createdAt,
+      location: issue.locality,
+    }));
+
+    // Final response (strict shape)
+    const responsePayload = {
+      total_issues,
+      resolved_issues,
+      pending_issues,
+      critical_issues,
+      avg_resolution_time,
+      user_satisfaction,
+      efficiency,
+      monthly_trends,
+      category_breakdown,
+      priority_distribution,
+      department_performance,
+      recent_issues,
     };
 
-    return res.status(200).json({
-      success: true,
-      message: "Real-time statistics retrieved successfully",
-      data: stats,
-    });
+    return res.status(200).json(responsePayload);
   } catch (error) {
     console.error("Error getting real-time stats:", error);
     return createInternalErrorResponse(

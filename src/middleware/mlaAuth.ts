@@ -34,7 +34,6 @@ export const mlaAuth = async (
       });
     }
 
-    console.log(user.role, RoleTypes.MLASTAFF);
     if (user.role !== RoleTypes.MLASTAFF) {
       return res.status(403).json({
         success: false,
