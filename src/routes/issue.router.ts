@@ -122,14 +122,15 @@ router.post("/bulk", auth, validateBulkCreateIssue, createBulkIssues);
 // Get all issues with filtering (public)
 router.get("/", validateIssueFilter, getAllIssues);
 
-// Get issue by ID (public)
-router.get("/:id", getIssueById);
-
+// More specific routes BEFORE generic id route
 // Get issues by user ID (public)
 router.get("/user/:user_id", getIssuesByUserId);
 
 // Get issues by constituency (public)
 router.get("/constituency/:constituency_id", getIssuesByConstituency);
+
+// Get issue by ID (public)
+router.get("/:id", getIssueById);
 
 // Update issue (requires authentication - user can update their own, admin can update any)
 router.put("/:id", auth, validateUpdateIssue, updateIssue);

@@ -3,7 +3,6 @@ import { ChatGroq } from "@langchain/groq";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
-
 // ✅ Define output type - updated to match actual response
 interface Classification {
   department: string;
@@ -13,7 +12,7 @@ interface Classification {
 const model = new ChatGroq({
   model: "llama-3.1-8b-instant",
   temperature: 0,
-  apiKey: process.env.GROQ_API_KEY, 
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 // ✅ Parser enforces JSON structure
@@ -53,10 +52,10 @@ Now classify the following query:
 Query: {query}`
 );
 
-
-
 // ✅ Export the classification function
-export async function classifyUserQuery(query: string): Promise<{userquery: string, classification: string}> {
+export async function classifyUserQuery(
+  query: string
+): Promise<{ userquery: string; classification: string }> {
   try {
     // Check if GROQ API key is available
     if (!process.env.GROQ_API_KEY) {
@@ -72,19 +71,18 @@ export async function classifyUserQuery(query: string): Promise<{userquery: stri
     const chain = partialedPrompt.pipe(model).pipe(parser);
 
     const result = await chain.invoke({ query });
-    
+
     console.log("Raw AI classification result:", result);
     console.log("Result type:", typeof result);
     console.log("Result.department:", result.department);
-    
+
     // Convert the actual response format to the expected format
     return {
       userquery: query,
-      classification: result.department
+      classification: result.department,
     };
   } catch (err) {
     console.error("Classification error:", err);
     throw err;
   }
 }
-

@@ -1,6 +1,7 @@
 import express from "express";
 import { connectDB } from "./utils/db";
 import { configDotenv } from "dotenv";
+import fs from "fs";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import authRoutes from "./routes/auth.router";
@@ -12,7 +13,12 @@ import mlaDashboardRoutes from "./routes/mlaDashboard.router";
 import { specs } from "./config/swagger";
 import multer from "multer";
 
-configDotenv();
+// Load environment variables with support for .env.test when NODE_ENV=test
+(() => {
+  const isTest = process.env.NODE_ENV === "test";
+  const envPath = isTest && fs.existsSync(".env.test") ? ".env.test" : ".env";
+  configDotenv({ path: envPath });
+})();
 
 const app = express();
 

@@ -1,0 +1,3966 @@
+{
+  "config": {
+    "configFile": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\playwright.config.ts",
+    "rootDir": "H:/DCS-SEM 9/Minor Project/CitiZen/citiZen-api/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 6
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/results.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "H:/DCS-SEM 9/Minor Project/CitiZen/citiZen-api/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "api-tests",
+        "name": "api-tests",
+        "testDir": "H:/DCS-SEM 9/Minor Project/CitiZen/citiZen-api/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/tests/**/*.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.55.0",
+    "workers": 6,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3333/health",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "unit\\auth.spec.ts",
+      "file": "unit/auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication API - Unit Tests",
+          "file": "unit/auth.spec.ts",
+          "line": 82,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "POST /api/auth/signup/email - Email Signup",
+              "file": "unit/auth.spec.ts",
+              "line": 83,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-AUTH-001: Valid signup with all required fields (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 265,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:101:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                              "column": 33,
+                              "line": 101
+                            },
+                            "snippet": "\u001b[0m \u001b[90m  99 |\u001b[39m         }\n \u001b[90m 100 |\u001b[39m       )\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 101 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 102 |\u001b[39m       \u001b[36mconst\u001b[39m responseData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m response\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 103 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"message\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 104 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"token\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                                "column": 33,
+                                "line": 101
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m  99 |\u001b[39m         }\n \u001b[90m 100 |\u001b[39m       )\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 101 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 102 |\u001b[39m       \u001b[36mconst\u001b[39m responseData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m response\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 103 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"message\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 104 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"token\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:101:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:30.831Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                            "column": 33,
+                            "line": 101
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-2f00438ffa5c0a41b879",
+                  "file": "unit/auth.spec.ts",
+                  "line": 84,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-002: Invalid email format (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 6,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 55,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.533Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-78b635efd0715fe7e079",
+                  "file": "unit/auth.spec.ts",
+                  "line": 109,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-003: Password too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 6,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 34,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:41.625Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-3f77aaeaf748782a1a68",
+                  "file": "unit/auth.spec.ts",
+                  "line": 132,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-004: Password at minimum boundary (BVA - At boundary)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 6,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 253,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:171:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                              "column": 33,
+                              "line": 171
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 169 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 170 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 171 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 172 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 173 |\u001b[39m\n \u001b[90m 174 |\u001b[39m     test(\u001b[32m\"TC-AUTH-005: Name too short (BVA - Just below boundary)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                                "column": 33,
+                                "line": 171
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m 169 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 170 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 171 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 172 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 173 |\u001b[39m\n \u001b[90m 174 |\u001b[39m     test(\u001b[32m\"TC-AUTH-005: Name too short (BVA - Just below boundary)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:171:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:41.694Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                            "column": 33,
+                            "line": 171
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-9b01fbf56e303aeb7693",
+                  "file": "unit/auth.spec.ts",
+                  "line": 153,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-005: Name too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 168,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:30.880Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-af2672b142938dcd9e9c",
+                  "file": "unit/auth.spec.ts",
+                  "line": 174,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-006: Name at minimum boundary (BVA - At boundary)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "failed",
+                          "duration": 217,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:213:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                              "column": 33,
+                              "line": 213
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 211 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 212 |\u001b[39m       console\u001b[33m.\u001b[39mlog(response)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 213 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 214 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 215 |\u001b[39m\n \u001b[90m 216 |\u001b[39m     test(\u001b[32m\"TC-AUTH-007: Missing required fields (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                                "column": 33,
+                                "line": 213
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m 211 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 212 |\u001b[39m       console\u001b[33m.\u001b[39mlog(response)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 213 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 214 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 215 |\u001b[39m\n \u001b[90m 216 |\u001b[39m     test(\u001b[32m\"TC-AUTH-007: Missing required fields (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:213:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "APIResponse: 400 Bad Request\n  X-Powered-By: Express\n  Access-Control-Allow-Origin: *\n  Content-Type: application/json; charset=utf-8\n  Content-Length: 47\n  ETag: W/\"2f-4yhx94le+lOp+hMu8rhzVN9UJsM\"\n  Date: Tue, 09 Sep 2025 07:26:36 GMT\n  Connection: keep-alive\n  Keep-Alive: timeout=5\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:35.805Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                            "column": 33,
+                            "line": 213
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-43d05bd783a2a410f42d",
+                  "file": "unit/auth.spec.ts",
+                  "line": 195,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-007: Missing required fields (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 60,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:38.137Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-5ebbfe51811d97fdcc13",
+                  "file": "unit/auth.spec.ts",
+                  "line": 216,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-008: Duplicate email signup (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 79,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:42.451Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-ee70d707cd44db82ca1e",
+                  "file": "unit/auth.spec.ts",
+                  "line": 233,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "POST /api/auth/login/email - Email Login",
+              "file": "unit/auth.spec.ts",
+              "line": 269,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-AUTH-009: Valid login credentials (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 673,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:30.852Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-ce201be51c65ce34738f",
+                  "file": "unit/auth.spec.ts",
+                  "line": 270,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-010: Invalid email format (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 70,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.074Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-cd13e55d8ce438726804",
+                  "file": "unit/auth.spec.ts",
+                  "line": 303,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-011: Wrong password (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 396,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.202Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-55a4042d9e131e00e44f",
+                  "file": "unit/auth.spec.ts",
+                  "line": 319,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-012: Non-existent user (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 303,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.627Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-a93af17791ae430d85fb",
+                  "file": "unit/auth.spec.ts",
+                  "line": 349,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-013: Missing credentials (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 216,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:30.870Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-5e15b140128d5e187f28",
+                  "file": "unit/auth.spec.ts",
+                  "line": 365,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "GET /api/auth/me - Get Current User Profile",
+              "file": "unit/auth.spec.ts",
+              "line": 382,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-AUTH-014: Valid authenticated request (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 1352,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:35.701Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-2c62beec21191570d2fc",
+                  "file": "unit/auth.spec.ts",
+                  "line": 383,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-015: Missing authorization header (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 23,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.075Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-cb656d06ad63b1f96dd8",
+                  "file": "unit/auth.spec.ts",
+                  "line": 425,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-016: Invalid token format (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 28,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.131Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-aeb7b7d285d49edf58de",
+                  "file": "unit/auth.spec.ts",
+                  "line": 433,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-017: Malformed authorization header (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 4,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 138,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:30.943Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-994a69bb8690a6505726",
+                  "file": "unit/auth.spec.ts",
+                  "line": 445,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "POST /api/auth/change-password - Change Password",
+              "file": "unit/auth.spec.ts",
+              "line": 458,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-AUTH-018: Valid password change (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 4,
+                          "parallelIndex": 4,
+                          "status": "failed",
+                          "duration": 697,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m401\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m401\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:502:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                              "column": 33,
+                              "line": 502
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 500 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 501 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 502 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m200\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 503 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 504 |\u001b[39m\n \u001b[90m 505 |\u001b[39m     test(\u001b[32m\"TC-AUTH-019: Wrong current password (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                                "column": 33,
+                                "line": 502
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m200\u001b[39m\nReceived: \u001b[31m401\u001b[39m\n\n\u001b[0m \u001b[90m 500 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 501 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 502 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m200\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 503 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 504 |\u001b[39m\n \u001b[90m 505 |\u001b[39m     test(\u001b[32m\"TC-AUTH-019: Wrong current password (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts:502:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:36.298Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\auth.spec.ts",
+                            "column": 33,
+                            "line": 502
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-ad16b12ad5b2859916c0",
+                  "file": "unit/auth.spec.ts",
+                  "line": 459,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-019: Wrong current password (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 1423,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:38.996Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-9d881d496802363ea0e7",
+                  "file": "unit/auth.spec.ts",
+                  "line": 505,
+                  "column": 9
+                },
+                {
+                  "title": "TC-AUTH-020: New password too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 1346,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:44.678Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "d8913dee49f1d741cd20-bc92c81f4667c27cab48",
+                  "file": "unit/auth.spec.ts",
+                  "line": 551,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "unit\\constituencies.spec.ts",
+      "file": "unit/constituencies.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Constituencies API - Unit Tests",
+          "file": "unit/constituencies.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "POST /api/constituencies - Create Constituency",
+              "file": "unit/constituencies.spec.ts",
+              "line": 16,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-001: Valid constituency creation (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 5,
+                          "parallelIndex": 5,
+                          "status": "failed",
+                          "duration": 48,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:36:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 33,
+                              "line": 36
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 34 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 35 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 36 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[36mconst\u001b[39m responseData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m response\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 38 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"constituency\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 39 |\u001b[39m       expect(responseData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39mname)\u001b[33m.\u001b[39mtoBe(\u001b[32m\"Test Constituency\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 33,
+                                "line": 36
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m 34 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 35 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 36 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[36mconst\u001b[39m responseData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m response\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 38 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"constituency\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 39 |\u001b[39m       expect(responseData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39mname)\u001b[33m.\u001b[39mtoBe(\u001b[32m\"Test Constituency\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:36:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:30.839Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 33,
+                            "line": 36
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-8a0f6a63504b3e333774",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 17,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-002: Name too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 8,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 190,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:38.137Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-649ce5a8f5b4e8647d86",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 42,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-003: Name at minimum boundary (BVA - At boundary)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 8,
+                          "parallelIndex": 5,
+                          "status": "failed",
+                          "duration": 160,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:83:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 33,
+                              "line": 83
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 81 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 82 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 83 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 84 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 85 |\u001b[39m\n \u001b[90m 86 |\u001b[39m     test(\u001b[32m\"TC-CONST-004: Name too long (BVA - Just above boundary)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 33,
+                                "line": 83
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m 81 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 82 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 83 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 84 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 85 |\u001b[39m\n \u001b[90m 86 |\u001b[39m     test(\u001b[32m\"TC-CONST-004: Name too long (BVA - Just above boundary)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:83:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:42.782Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 33,
+                            "line": 83
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-d8c49a98502967712d2a",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 64,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-004: Name too long (BVA - Just above boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 35,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:45.084Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-b53fff8abb9b54b716ac",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 86,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-005: Constituency ID too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 179,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.220Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-ad49b8539d710929f30d",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 108,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-006: Constituency ID at minimum boundary (BVA - At boundary)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "failed",
+                          "duration": 253,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:149:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 33,
+                              "line": 149
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 147 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 148 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 149 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 150 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 151 |\u001b[39m\n \u001b[90m 152 |\u001b[39m     test(\u001b[32m\"TC-CONST-007: Missing required fields (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 33,
+                                "line": 149
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m201\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m 147 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 148 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 149 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m201\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 150 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 151 |\u001b[39m\n \u001b[90m 152 |\u001b[39m     test(\u001b[32m\"TC-CONST-007: Missing required fields (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:149:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:40.049Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 33,
+                            "line": 149
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-ccea41b93f0a48a1fba6",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 130,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-007: Missing required fields (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 10,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 21,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:41.709Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-f75d2c0d0d9aa0cdec34",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 152,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-008: Unauthorized request (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 10,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 186,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:45.797Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-729449cda4e5b3443f50",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 173,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-009: Duplicate constituency ID (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 482,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:37.979Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-6be5e01f3f7b9dad4aaf",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 190,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "GET /api/constituencies - Get All Constituencies",
+              "file": "unit/constituencies.spec.ts",
+              "line": 226,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-010: Get all constituencies (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 283,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:42.231Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-b3710e008715b26576f4",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 227,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "GET /api/constituencies/:id - Get Constituency by ID",
+              "file": "unit/constituencies.spec.ts",
+              "line": 239,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-011: Get existing constituency by valid ID (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "failed",
+                          "duration": 231,
+                          "error": {
+                            "message": "TypeError: Cannot read properties of undefined (reading '_id')",
+                            "stack": "TypeError: Cannot read properties of undefined (reading '_id')\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:260:54",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 54,
+                              "line": 260
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 258 |\u001b[39m\n \u001b[90m 259 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 260 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 261 |\u001b[39m\n \u001b[90m 262 |\u001b[39m       \u001b[90m// Then get the constituency\u001b[39m\n \u001b[90m 263 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 54,
+                                "line": 260
+                              },
+                              "message": "TypeError: Cannot read properties of undefined (reading '_id')\n\n\u001b[0m \u001b[90m 258 |\u001b[39m\n \u001b[90m 259 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 260 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 261 |\u001b[39m\n \u001b[90m 262 |\u001b[39m       \u001b[90m// Then get the constituency\u001b[39m\n \u001b[90m 263 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39m\u001b[36mget\u001b[39m(\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:260:54\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:42.534Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 54,
+                            "line": 260
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-fa08ce0e3d3b71ef0512",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 240,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-012: Get constituency with invalid ID format (ECP - Invalid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 12,
+                          "parallelIndex": 2,
+                          "status": "failed",
+                          "duration": 191,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:279:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 33,
+                              "line": 279
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 277 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 278 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 279 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 280 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 281 |\u001b[39m\n \u001b[90m 282 |\u001b[39m     test(\u001b[32m\"TC-CONST-013: Get non-existent constituency (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 33,
+                                "line": 279
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n\n\u001b[0m \u001b[90m 277 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 278 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 279 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 280 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 281 |\u001b[39m\n \u001b[90m 282 |\u001b[39m     test(\u001b[32m\"TC-CONST-013: Get non-existent constituency (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:279:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:44.830Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 33,
+                            "line": 279
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-19073be1b39fb6a77086",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 272,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-013: Get non-existent constituency (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 11,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 425,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:43.745Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-738ab19120e8644deb82",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 282,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "PUT /api/constituencies/:id - Update Constituency",
+              "file": "unit/constituencies.spec.ts",
+              "line": 293,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-014: Update constituency with valid data (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 11,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 585,
+                          "error": {
+                            "message": "TypeError: Cannot read properties of undefined (reading '_id')",
+                            "stack": "TypeError: Cannot read properties of undefined (reading '_id')\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:314:54",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 54,
+                              "line": 314
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 312 |\u001b[39m\n \u001b[90m 313 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 314 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 315 |\u001b[39m\n \u001b[90m 316 |\u001b[39m       \u001b[90m// Then update the constituency\u001b[39m\n \u001b[90m 317 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39mput(\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 54,
+                                "line": 314
+                              },
+                              "message": "TypeError: Cannot read properties of undefined (reading '_id')\n\n\u001b[0m \u001b[90m 312 |\u001b[39m\n \u001b[90m 313 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 314 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 315 |\u001b[39m\n \u001b[90m 316 |\u001b[39m       \u001b[90m// Then update the constituency\u001b[39m\n \u001b[90m 317 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39mput(\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:314:54\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:48.710Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 54,
+                            "line": 314
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-a70559d0eac52447a5c2",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 294,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-015: Update constituency with invalid data (ECP - Invalid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 14,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 108,
+                          "error": {
+                            "message": "TypeError: Cannot read properties of undefined (reading '_id')",
+                            "stack": "TypeError: Cannot read properties of undefined (reading '_id')\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:356:54",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 54,
+                              "line": 356
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 354 |\u001b[39m\n \u001b[90m 355 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 356 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 357 |\u001b[39m\n \u001b[90m 358 |\u001b[39m       \u001b[90m// Then update with invalid data\u001b[39m\n \u001b[90m 359 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39mput(\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 54,
+                                "line": 356
+                              },
+                              "message": "TypeError: Cannot read properties of undefined (reading '_id')\n\n\u001b[0m \u001b[90m 354 |\u001b[39m\n \u001b[90m 355 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 356 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 357 |\u001b[39m\n \u001b[90m 358 |\u001b[39m       \u001b[90m// Then update with invalid data\u001b[39m\n \u001b[90m 359 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39mput(\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:356:54\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:51.029Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 54,
+                            "line": 356
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-045643d02b0f4645a1af",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 335,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-016: Update non-existent constituency (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 502,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.695Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-f89e3e37aeaeabb1ce31",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 375,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "DELETE /api/constituencies/:id - Delete Constituency",
+              "file": "unit/constituencies.spec.ts",
+              "line": 397,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-017: Delete existing constituency (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 492,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:42.571Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-70d98119e3a49975b2aa",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 398,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-018: Delete non-existent constituency (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 344,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:46.840Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-deca35f0fcd592547bb5",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 433,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "POST /api/constituencies/bulk - Create Bulk Constituencies",
+              "file": "unit/constituencies.spec.ts",
+              "line": 451,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-019: Create bulk constituencies with valid data (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 212,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:47.197Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-b9d5894851c099af69de",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 452,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-020: Create bulk constituencies with empty array (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 25,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:47.427Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-e2b2bffb2f31539c070e",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 486,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-021: Create bulk constituencies with invalid data (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 10,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 48,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:46.014Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-30fdceb6790987c6eec7",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 506,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "POST /api/constituencies/:constituency_id/panchayats - Add Panchayats to Constituency",
+              "file": "unit/constituencies.spec.ts",
+              "line": 533,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-CONST-022: Add panchayats to existing constituency (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 10,
+                          "parallelIndex": 3,
+                          "status": "failed",
+                          "duration": 458,
+                          "error": {
+                            "message": "TypeError: Cannot read properties of undefined (reading '_id')",
+                            "stack": "TypeError: Cannot read properties of undefined (reading '_id')\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:554:54",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                              "column": 54,
+                              "line": 554
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 552 |\u001b[39m\n \u001b[90m 553 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 554 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 555 |\u001b[39m\n \u001b[90m 556 |\u001b[39m       \u001b[90m// Then add panchayats\u001b[39m\n \u001b[90m 557 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39mpost(\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                                "column": 54,
+                                "line": 554
+                              },
+                              "message": "TypeError: Cannot read properties of undefined (reading '_id')\n\n\u001b[0m \u001b[90m 552 |\u001b[39m\n \u001b[90m 553 |\u001b[39m       \u001b[36mconst\u001b[39m createData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m createResponse\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 554 |\u001b[39m       \u001b[36mconst\u001b[39m constituencyId \u001b[33m=\u001b[39m createData\u001b[33m.\u001b[39mconstituency\u001b[33m.\u001b[39m_id\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 555 |\u001b[39m\n \u001b[90m 556 |\u001b[39m       \u001b[90m// Then add panchayats\u001b[39m\n \u001b[90m 557 |\u001b[39m       \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m request\u001b[33m.\u001b[39mpost(\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts:554:54\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:50.264Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\constituencies.spec.ts",
+                            "column": 54,
+                            "line": 554
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-8ae53e5f20de48d1a82e",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 534,
+                  "column": 9
+                },
+                {
+                  "title": "TC-CONST-023: Add panchayats to non-existent constituency (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 44,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:52.271Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1169d1e613ed071355b9-b70abddc3c3bb69b18cb",
+                  "file": "unit/constituencies.spec.ts",
+                  "line": 584,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "unit\\issues.spec.ts",
+      "file": "unit/issues.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Issues API - Unit Tests",
+          "file": "unit/issues.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "POST /api/issues - Create Issue",
+              "file": "unit/issues.spec.ts",
+              "line": 17,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-001: Valid issue creation (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 2318,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:46.065Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-35d4eb413da0123a4f0a",
+                  "file": "unit/issues.spec.ts",
+                  "line": 18,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-002: Title too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 793,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:52.585Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-f19ad953f336d1cbbc60",
+                  "file": "unit/issues.spec.ts",
+                  "line": 41,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-003: Title at minimum boundary (BVA - At boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 2314,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:53.391Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-e26cba7911c22157f5cd",
+                  "file": "unit/issues.spec.ts",
+                  "line": 61,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-004: Title too long (BVA - Just above boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 626,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:55.722Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-feacdcd38147cbc1cdf5",
+                  "file": "unit/issues.spec.ts",
+                  "line": 81,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-005: Detail too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 1056,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.375Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-fc627b9e7f420343ffcb",
+                  "file": "unit/issues.spec.ts",
+                  "line": 101,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-006: Detail at minimum boundary (BVA - At boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1806,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:47.480Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-1a836f1ce173035ca976",
+                  "file": "unit/issues.spec.ts",
+                  "line": 121,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-007: Locality too short (BVA - Just below boundary)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1289,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:53.349Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-dc2040c38a0509204766",
+                  "file": "unit/issues.spec.ts",
+                  "line": 141,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-008: Anonymous issue creation (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1667,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:54.655Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-a8d818fb9ff5eb0c7281",
+                  "file": "unit/issues.spec.ts",
+                  "line": 161,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-009: Missing required fields (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 600,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.342Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-a43b82c9e5997a330423",
+                  "file": "unit/issues.spec.ts",
+                  "line": 183,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-010: Unauthenticated request (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 191,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.964Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-f1c92a0ef7c427d97020",
+                  "file": "unit/issues.spec.ts",
+                  "line": 201,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "GET /api/issues - Get All Issues",
+              "file": "unit/issues.spec.ts",
+              "line": 217,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-011: Get all issues without filters (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 472,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:51.570Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-8549c6eded80ec57c06a",
+                  "file": "unit/issues.spec.ts",
+                  "line": 218,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-012: Get issues with valid status filter (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 86,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.257Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-5bc2c8e818495058f0ba",
+                  "file": "unit/issues.spec.ts",
+                  "line": 229,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-013: Get issues with invalid status filter (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 206,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.386Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-373e720b3007a6f21157",
+                  "file": "unit/issues.spec.ts",
+                  "line": 241,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-014: Get issues with pagination (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 322,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.610Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-2ed027ee16149781a8f8",
+                  "file": "unit/issues.spec.ts",
+                  "line": 251,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-015: Get issues with invalid pagination (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 205,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.951Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-c0c866be13b99a1092e4",
+                  "file": "unit/issues.spec.ts",
+                  "line": 264,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-016: Get issues with date range filter (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 251,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:49.884Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-b4c177b55ecf37a9aa52",
+                  "file": "unit/issues.spec.ts",
+                  "line": 274,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-017: Get issues with invalid date range (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 213,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:53.125Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-da5a2c5c9b144e429fbb",
+                  "file": "unit/issues.spec.ts",
+                  "line": 287,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "GET /api/issues/:id - Get Issue by ID",
+              "file": "unit/issues.spec.ts",
+              "line": 301,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-018: Get existing issue by valid ID (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 2598,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:53.354Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-bdc183d7aa1748d70b78",
+                  "file": "unit/issues.spec.ts",
+                  "line": 302,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-019: Get issue with invalid ID format (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 47,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:55.969Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-fceafb404f92ea650668",
+                  "file": "unit/issues.spec.ts",
+                  "line": 332,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-020: Get non-existent issue (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 280,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.035Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-e779c44191185df18eaf",
+                  "file": "unit/issues.spec.ts",
+                  "line": 342,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "PUT /api/issues/:id - Update Issue",
+              "file": "unit/issues.spec.ts",
+              "line": 353,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-021: Update issue with valid data (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 3143,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.337Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-b66f4147c55ffcc7302c",
+                  "file": "unit/issues.spec.ts",
+                  "line": 354,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-022: Update issue with invalid data (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 1362,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:03.189Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-3da8d374567761d3f506",
+                  "file": "unit/issues.spec.ts",
+                  "line": 394,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-023: Update non-existent issue (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 597,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:04.568Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-a7fa8cbb30b4a8d4bef5",
+                  "file": "unit/issues.spec.ts",
+                  "line": 433,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "PATCH /api/issues/:id/status - Update Issue Status",
+              "file": "unit/issues.spec.ts",
+              "line": 456,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-024: Update status with valid status (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 1413,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:05.186Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-f4fe80d1be1718ac2b21",
+                  "file": "unit/issues.spec.ts",
+                  "line": 457,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-025: Update status with invalid status (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 5,
+                          "status": "passed",
+                          "duration": 2377,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:06.620Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-8a864034d6d310c8ee27",
+                  "file": "unit/issues.spec.ts",
+                  "line": 495,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "POST /api/issues/:id/feedback - Add Feedback",
+              "file": "unit/issues.spec.ts",
+              "line": 533,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-026: Add feedback with valid data (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 3726,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:56.407Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-e36af2733709dd8da3c8",
+                  "file": "unit/issues.spec.ts",
+                  "line": 534,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-027: Add feedback with invalid satisfaction score (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 1665,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:04.569Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-977bd32f3fee47e0c0f9",
+                  "file": "unit/issues.spec.ts",
+                  "line": 581,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "DELETE /api/issues/:id - Delete Issue",
+              "file": "unit/issues.spec.ts",
+              "line": 630,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-ISSUE-028: Delete existing issue (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 1454,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:06.254Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-28a89cf4bb29112a9762",
+                  "file": "unit/issues.spec.ts",
+                  "line": 631,
+                  "column": 9
+                },
+                {
+                  "title": "TC-ISSUE-029: Delete non-existent issue (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 1161,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:07.730Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "dfb159b1dd1383d75d89-6dbe1dd1c11fc9f2a5d5",
+                  "file": "unit/issues.spec.ts",
+                  "line": 664,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "unit\\upvotes.spec.ts",
+      "file": "unit/upvotes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Upvotes API - Unit Tests",
+          "file": "unit/upvotes.spec.ts",
+          "line": 34,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "POST /api/upvotes/:issue_id - Add Upvote",
+              "file": "unit/upvotes.spec.ts",
+              "line": 35,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-UPVOTE-001: Add upvote to existing issue (ECP - Valid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "failed",
+                          "duration": 2403,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"upvoted\"\u001b[39m\nReceived string:    \u001b[31m\"Upvote added successfully\"\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"upvoted\"\u001b[39m\nReceived string:    \u001b[31m\"Upvote added successfully\"\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:54:36",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                              "column": 36,
+                              "line": 54
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 52 |\u001b[39m       \u001b[36mconst\u001b[39m responseData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m response\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 53 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"message\"\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 54 |\u001b[39m       expect(responseData\u001b[33m.\u001b[39mmessage)\u001b[33m.\u001b[39mtoContain(\u001b[32m\"upvoted\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 55 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 56 |\u001b[39m\n \u001b[90m 57 |\u001b[39m     test(\u001b[32m\"TC-UPVOTE-002: Add upvote to non-existent issue (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                                "column": 36,
+                                "line": 54
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"upvoted\"\u001b[39m\nReceived string:    \u001b[31m\"Upvote added successfully\"\u001b[39m\n\n\u001b[0m \u001b[90m 52 |\u001b[39m       \u001b[36mconst\u001b[39m responseData \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m response\u001b[33m.\u001b[39mjson()\u001b[33m;\u001b[39m\n \u001b[90m 53 |\u001b[39m       expect(responseData)\u001b[33m.\u001b[39mtoHaveProperty(\u001b[32m\"message\"\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 54 |\u001b[39m       expect(responseData\u001b[33m.\u001b[39mmessage)\u001b[33m.\u001b[39mtoContain(\u001b[32m\"upvoted\"\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 55 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 56 |\u001b[39m\n \u001b[90m 57 |\u001b[39m     test(\u001b[32m\"TC-UPVOTE-002: Add upvote to non-existent issue (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:54:36\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:57.181Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                            "column": 36,
+                            "line": 54
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-41657c0783e4c65b24f1",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 36,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-002: Add upvote to non-existent issue (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 19,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 1550,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:06.389Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-9425d4aed4aeda3f9946",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 57,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-003: Add upvote with invalid issue ID format (ECP - Invalid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 19,
+                          "parallelIndex": 2,
+                          "status": "failed",
+                          "duration": 1014,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:88:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                              "column": 33,
+                              "line": 88
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 86 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 87 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 88 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 89 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 90 |\u001b[39m\n \u001b[90m 91 |\u001b[39m     test(\u001b[32m\"TC-UPVOTE-004: Add upvote without authentication (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                                "column": 33,
+                                "line": 88
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n\n\u001b[0m \u001b[90m 86 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 87 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 88 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 89 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 90 |\u001b[39m\n \u001b[90m 91 |\u001b[39m     test(\u001b[32m\"TC-UPVOTE-004: Add upvote without authentication (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:88:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:11.199Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                            "column": 33,
+                            "line": 88
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-4cbf4bb97f1cf9bb420c",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 74,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-004: Add upvote without authentication (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1871,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:57.181Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-939a877123faacc0e856",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 91,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-005: Add duplicate upvote (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1670,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:03.834Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-c819edbf6a8c8102fcd3",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 104,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "DELETE /api/upvotes/:issue_id - Remove Upvote",
+              "file": "unit/upvotes.spec.ts",
+              "line": 131,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-UPVOTE-006: Remove existing upvote (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 2163,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:05.521Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-cf5406835556e19358e8",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 132,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-007: Remove non-existent upvote (ECP - Invalid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 4,
+                          "status": "failed",
+                          "duration": 2366,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m404\u001b[39m\nReceived: \u001b[31m400\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m404\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:176:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                              "column": 33,
+                              "line": 176
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 174 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 175 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 176 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 177 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 178 |\u001b[39m\n \u001b[90m 179 |\u001b[39m     test(\u001b[32m\"TC-UPVOTE-008: Remove upvote from non-existent issue (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                                "column": 33,
+                                "line": 176
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m404\u001b[39m\nReceived: \u001b[31m400\u001b[39m\n\n\u001b[0m \u001b[90m 174 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 175 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 176 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m404\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 177 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 178 |\u001b[39m\n \u001b[90m 179 |\u001b[39m     test(\u001b[32m\"TC-UPVOTE-008: Remove upvote from non-existent issue (ECP - Invalid Class)\"\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:176:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:26:57.458Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                            "column": 33,
+                            "line": 176
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-9c3c8673ed9d88d8e2c2",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 161,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-008: Remove upvote from non-existent issue (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 18,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 1482,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:06.392Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-f6ff970e393e66209616",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 179,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-009: Remove upvote without authentication (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 18,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 1613,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:11.138Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-e30aa6348a38d20d8cfa",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 196,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "GET /api/upvotes/:issue_id/check - Check User Upvote",
+              "file": "unit/upvotes.spec.ts",
+              "line": 218,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-UPVOTE-010: Check upvote status when user has upvoted (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1490,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:01.862Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-9f99955ca9858b922b68",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 219,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-011: Check upvote status when user has not upvoted (ECP - Valid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1134,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:05.522Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-bea17b18d40e05b8063e",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 248,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-012: Check upvote status for non-existent issue (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1024,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:06.687Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-53dafedc08fb773b90fc",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 270,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-013: Check upvote status without authentication (ECP - Invalid Class)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1562,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:07.709Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-478fecfcab71e4d4a45a",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 287,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-014: Check upvote status with invalid issue ID format (ECP - Invalid Class)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 1,
+                          "status": "failed",
+                          "duration": 514,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:314:33",
+                            "location": {
+                              "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                              "column": 33,
+                              "line": 314
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 312 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 313 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 314 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 315 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 316 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 317 |\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                                "column": 33,
+                                "line": 314
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m400\u001b[39m\nReceived: \u001b[31m500\u001b[39m\n\n\u001b[0m \u001b[90m 312 |\u001b[39m       )\u001b[33m;\u001b[39m\n \u001b[90m 313 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 314 |\u001b[39m       expect(response\u001b[33m.\u001b[39mstatus())\u001b[33m.\u001b[39mtoBe(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 315 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 316 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 317 |\u001b[39m\u001b[0m\n\u001b[2m    at H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts:314:33\u001b[22m"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:12.792Z",
+                          "annotations": [],
+                          "attachments": [],
+                          "errorLocation": {
+                            "file": "H:\\DCS-SEM 9\\Minor Project\\CitiZen\\citiZen-api\\tests\\unit\\upvotes.spec.ts",
+                            "column": 33,
+                            "line": 314
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-fdba4ba1f7bd477a62ce",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 300,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Upvote Workflow Tests",
+              "file": "unit/upvotes.spec.ts",
+              "line": 318,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-UPVOTE-015: Complete upvote workflow - add, check, remove (Integration Test)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 20,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 913,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:14.584Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-09c79f5cf4acd700169a",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 319,
+                  "column": 9
+                },
+                {
+                  "title": "TC-UPVOTE-016: Multiple users upvoting same issue (Integration Test)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "api-tests",
+                      "projectName": "api-tests",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 2096,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Setting up test data...\n"
+                            },
+                            {
+                              "text": "Test data setup completed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-09-09T07:27:07.728Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "8c6317458415d98d91e4-6d6ad9481fc795d4a3f4",
+                  "file": "unit/upvotes.spec.ts",
+                  "line": 384,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-09-09T07:26:17.769Z",
+    "duration": 58863.761,
+    "expected": 72,
+    "skipped": 0,
+    "unexpected": 16,
+    "flaky": 0
+  }
+}

@@ -42,10 +42,10 @@ A citizen engagement platform API built with Node.js, Express, TypeScript, and M
 
    ```env
    # Server Configuration
-   PORT=3000
+   PORT=3333
 
    # Database Configuration
-   MONGODB_URI=mongodb://localhost:27017/citizen_db
+   MONGO_URI=mongodb://localhost:27017/citizen_db
 
    # JWT Configuration
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production

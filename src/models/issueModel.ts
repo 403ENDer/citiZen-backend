@@ -10,7 +10,8 @@ interface IIssue extends Document {
   panchayat_id: mongoose.Types.ObjectId;
   ward_no: string;
   department_id?: mongoose.Types.ObjectId;
-  handled_by?: mongoose.Types.ObjectId;
+  handled_by?: any;
+  upvoted_by?: mongoose.Types.ObjectId[];
   status: IssueStatus;
   upvotes: number;
   priority_level: PriorityLevel;
@@ -40,7 +41,8 @@ const IssueSchema = new Schema<IIssue>(
     },
     ward_no: { type: String, required: true },
     department_id: { type: Schema.Types.ObjectId, ref: "Department" },
-    handled_by: { type: Schema.Types.ObjectId, ref: "DepartmentEmployee" },
+    handled_by: { type: Schema.Types.Mixed },
+    upvoted_by: [{ type: Schema.Types.ObjectId, ref: "User" }],
     status: {
       type: String,
       enum: Object.values(IssueStatus),

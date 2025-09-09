@@ -13,14 +13,13 @@ interface users extends Document {
 
 const userSchema = new Schema<users>(
   {
-    name: { type: String, required: true, minlength: 3, trim: true },
+    name: { type: String, required: true, minlength: 2, trim: true },
     email: { type: String, required: true, unique: true },
     password_hash: { type: String, required: false },
     phone_number: {
       type: String,
       required: true,
       minlength: 10,
-      unique: true,
       trim: true,
     },
     role: {

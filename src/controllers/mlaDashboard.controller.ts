@@ -310,7 +310,7 @@ export const getMLADashboard = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Get real-time statistics for MLA dashboard (strict response shape)
+// Get real-time statistics for MLA dashboard
 export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
   try {
     const { constituencyId } = req.params;
@@ -338,15 +338,29 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    const idError = validateObjectIdParam(constituencyId, "constituencyId");
-    if (idError) {
+    if (validateObjectIdParam(constituencyId, "constituencyId")) {
       return res.status(400).json({
         success: false,
-        message: idError,
+        message: "Invalid constituency ID",
       });
     }
 
-    // Totals
+    // Helper functions
+    const daysBetween = (start?: Date, end?: Date) => {
+      if (!start || !end) return null;
+      return (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+    };
+
+    const satisfactionToScore = (s: string | undefined): number | null => {
+      if (!s) return null;
+      const val = String(s).toLowerCase();
+      if (val === "good") return 5;
+      if (val === "average") return 3;
+      if (val === "poor") return 1;
+      return null;
+    };
+
+    // Get basic counts
     const [total_issues, resolved_issues, pending_issues, critical_issues] =
       await Promise.all([
         Issue.countDocuments({ constituency_id: constituencyId }),
@@ -364,32 +378,22 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
         }),
       ]);
 
-    // Avg resolution time and user satisfaction
+    // Get resolved issues for calculations
     const resolvedDocs = await Issue.find({
       constituency_id: constituencyId,
       status: "resolved",
-    }).select("createdAt completed_at satisfaction_score department_id");
+    }).select("createdAt completed_at satisfaction_score");
 
-    const daysBetween = (start?: Date, end?: Date) => {
-      if (!start || !end) return null;
-      return (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-    };
-    const satisfactionToScore = (s: string | undefined): number | null => {
-      if (!s) return null;
-      const v = String(s).toLowerCase();
-      if (v === "good") return 5;
-      if (v === "average") return 3;
-      if (v === "poor") return 1;
-      return null;
-    };
-
+    // Calculate averages
     const resolutionTimes: number[] = [];
-    const satScores: number[] = [];
+    const satisfactionScores: number[] = [];
+
     resolvedDocs.forEach((doc: any) => {
-      const d = daysBetween(doc.createdAt, doc.completed_at);
-      if (d !== null) resolutionTimes.push(d);
-      const s = satisfactionToScore(doc.satisfaction_score);
-      if (s !== null) satScores.push(s);
+      const days = daysBetween(doc.createdAt, doc.completed_at);
+      if (days !== null) resolutionTimes.push(days);
+
+      const sat = satisfactionToScore(doc.satisfaction_score);
+      if (sat !== null) satisfactionScores.push(sat);
     });
 
     const avg_resolution_time = resolutionTimes.length
@@ -399,9 +403,13 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
           ).toFixed(1)
         )
       : 0;
-    const user_satisfaction = satScores.length
+
+    const user_satisfaction = satisfactionScores.length
       ? Number(
-          (satScores.reduce((a, b) => a + b, 0) / satScores.length).toFixed(1)
+          (
+            satisfactionScores.reduce((a, b) => a + b, 0) /
+            satisfactionScores.length
+          ).toFixed(1)
         )
       : 0;
 
@@ -426,16 +434,19 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
           constituency_id: constituencyId,
           createdAt: { $gte: m.start, $lt: m.end },
         });
+
         const resolvedInMonth = await Issue.find({
           constituency_id: constituencyId,
           status: "resolved",
           createdAt: { $gte: m.start, $lt: m.end },
         }).select("createdAt completed_at satisfaction_score");
+
         const pending = await Issue.countDocuments({
           constituency_id: constituencyId,
           status: "pending",
           createdAt: { $gte: m.start, $lt: m.end },
         });
+
         const critical = await Issue.countDocuments({
           constituency_id: constituencyId,
           priority_level: "high",
@@ -443,12 +454,14 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
         });
 
         const respDays: number[] = [];
-        const sat: number[] = [];
+        const satScores: number[] = [];
+
         resolvedInMonth.forEach((doc: any) => {
-          const d = daysBetween(doc.createdAt, doc.completed_at);
-          if (d !== null) respDays.push(d);
-          const s = satisfactionToScore(doc.satisfaction_score);
-          if (s !== null) sat.push(s);
+          const days = daysBetween(doc.createdAt, doc.completed_at);
+          if (days !== null) respDays.push(days);
+
+          const sat = satisfactionToScore(doc.satisfaction_score);
+          if (sat !== null) satScores.push(sat);
         });
 
         const avg_resolution = respDays.length
@@ -456,15 +469,19 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
               (respDays.reduce((a, b) => a + b, 0) / respDays.length).toFixed(1)
             )
           : 0;
-        const satisfaction = sat.length
-          ? Number((sat.reduce((a, b) => a + b, 0) / sat.length).toFixed(1))
+
+        const satisfaction = satScores.length
+          ? Number(
+              (satScores.reduce((a, b) => a + b, 0) / satScores.length).toFixed(
+                1
+              )
+            )
           : 0;
 
-        const resolved = resolvedInMonth.length;
         return {
           month: m.label,
           total,
-          resolved,
+          resolved: resolvedInMonth.length,
           pending,
           critical,
           avg_resolution,
@@ -473,7 +490,7 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
       })
     );
 
-    // Department performance and category breakdown
+    // Department performance
     const departments = await Department.find({});
     const department_performance = await Promise.all(
       departments.map(async (dept: any) => {
@@ -481,6 +498,7 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
           constituency_id: constituencyId,
           department_id: dept._id,
         } as any;
+
         const [issues, resolved, pending, resolvedDocsDept] = await Promise.all(
           [
             Issue.countDocuments(base),
@@ -494,11 +512,13 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
 
         const deptTimes: number[] = [];
         const deptSat: number[] = [];
+
         resolvedDocsDept.forEach((doc: any) => {
-          const d = daysBetween(doc.createdAt, doc.completed_at);
-          if (d !== null) deptTimes.push(d);
-          const s = satisfactionToScore(doc.satisfaction_score);
-          if (s !== null) deptSat.push(s);
+          const days = daysBetween(doc.createdAt, doc.completed_at);
+          if (days !== null) deptTimes.push(days);
+
+          const sat = satisfactionToScore(doc.satisfaction_score);
+          if (sat !== null) deptSat.push(sat);
         });
 
         const avg_response = deptTimes.length
@@ -508,6 +528,7 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
               )
             )
           : 0;
+
         const satisfaction = deptSat.length
           ? Number(
               (deptSat.reduce((a, b) => a + b, 0) / deptSat.length).toFixed(1)
@@ -527,6 +548,7 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
       })
     );
 
+    // Category breakdown
     const totalDeptIssues =
       department_performance.reduce((sum, d) => sum + (d.issues || 0), 0) || 1;
     const palette = [
@@ -565,6 +587,7 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
         priority_level: "low",
       }),
     ]);
+
     const priority_distribution = [
       { priority: "high", count: highCount, color: "#e74c3c" },
       { priority: "normal", count: normalCount, color: "#f1c40f" },
@@ -587,8 +610,8 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
       location: issue.locality,
     }));
 
-    // Final response (strict shape)
-    const responsePayload = {
+    // Return the exact type format
+    const responseData = {
       total_issues,
       resolved_issues,
       pending_issues,
@@ -603,7 +626,7 @@ export const getMLARealTimeStats = async (req: AuthRequest, res: Response) => {
       recent_issues,
     };
 
-    return res.status(200).json(responsePayload);
+    return res.status(200).json(responseData);
   } catch (error) {
     console.error("Error getting real-time stats:", error);
     return createInternalErrorResponse(
