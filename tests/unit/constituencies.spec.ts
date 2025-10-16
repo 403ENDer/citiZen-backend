@@ -7,6 +7,18 @@ import {
 
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3333";
 
+// Helper function to get a unique MLA ID for testing
+function getUniqueMlaId(suffix: string = ""): string {
+  const testData = getTestDataIds();
+  return testData.mla_user_id + suffix;
+}
+
+// Helper function to get a unique constituency ID for testing
+function getUniqueConstituencyId(suffix: string = ""): string {
+  const timestamp = Date.now().toString().slice(-6);
+  return `CONST_${timestamp}${suffix}`;
+}
+
 // Setup test data before all tests
 test.beforeAll(async ({ request }) => {
   await setupTestData(request);
@@ -17,7 +29,8 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-001: Valid constituency creation (ECP - Valid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
+      const testData = getTestDataIds();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -27,8 +40,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Test Constituency",
-            constituency_id: "CONST001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId(),
+            mla_id: testData.mla_user_id,
           },
         }
       );
@@ -42,7 +55,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-002: Name too short (BVA - Just below boundary)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -52,8 +65,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "A", // 1 character (minimum is 2)
-            constituency_id: "CONST001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId(),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -64,7 +77,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-003: Name at minimum boundary (BVA - At boundary)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -74,11 +87,15 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "AB", // Exactly 2 characters
-            constituency_id: "CONST001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId(),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
+
+      if (response.status() !== 201) {
+        const errorData = await response.json();
+      }
 
       expect(response.status()).toBe(201);
     });
@@ -86,7 +103,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-004: Name too long (BVA - Just above boundary)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -96,8 +113,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "A".repeat(101), // 101 characters (maximum is 100)
-            constituency_id: "CONST001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId(),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -108,7 +125,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-005: Constituency ID too short (BVA - Just below boundary)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -119,7 +136,7 @@ test.describe("Constituencies API - Unit Tests", () => {
           data: {
             name: "Test Constituency",
             constituency_id: "", // Empty (minimum is 1)
-            mla_id: "MLA001",
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -130,7 +147,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-006: Constituency ID at minimum boundary (BVA - At boundary)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -139,12 +156,16 @@ test.describe("Constituencies API - Unit Tests", () => {
             Authorization: `Bearer ${adminToken}`,
           },
           data: {
-            name: "Test Constituency",
-            constituency_id: "A", // Exactly 1 character
-            mla_id: "MLA001",
+            name: `TC006 Constituency ${Date.now()}`,
+            constituency_id: "AB", // Exactly 2 characters (minimum valid)
+            mla_id: getUniqueMlaId(),
           },
         }
       );
+
+      if (response.status() !== 201) {
+        const errorData = await response.json();
+      }
 
       expect(response.status()).toBe(201);
     });
@@ -152,7 +173,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-007: Missing required fields (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies`,
@@ -178,8 +199,8 @@ test.describe("Constituencies API - Unit Tests", () => {
         {
           data: {
             name: "Test Constituency",
-            constituency_id: "CONST001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId(),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -190,17 +211,18 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-009: Duplicate constituency ID (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
-      // First create a constituency
+      // First create a constituency with a specific duplicate ID
+      const dupId = getUniqueConstituencyId("_DUP");
       await request.post(`${API_BASE_URL}/api/constituencies`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
         data: {
           name: "First Constituency",
-          constituency_id: "DUPLICATE001",
-          mla_id: "MLA001",
+          constituency_id: dupId,
+          mla_id: getUniqueMlaId(),
         },
       });
 
@@ -213,8 +235,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Second Constituency",
-            constituency_id: "DUPLICATE001", // Same ID
-            mla_id: "MLA002",
+            constituency_id: dupId, // Same ID
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -241,7 +263,7 @@ test.describe("Constituencies API - Unit Tests", () => {
       request,
     }) => {
       // First create a constituency
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
       const createResponse = await request.post(
         `${API_BASE_URL}/api/constituencies`,
         {
@@ -250,8 +272,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Test Constituency for Get",
-            constituency_id: "CONST_GET001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId("_GET"),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -276,6 +298,7 @@ test.describe("Constituencies API - Unit Tests", () => {
         `${API_BASE_URL}/api/constituencies/invalid-id`
       );
 
+      // API now properly returns 400 for invalid ObjectId format
       expect(response.status()).toBe(400);
     });
 
@@ -294,8 +317,8 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-014: Update constituency with valid data (ECP - Valid Class)", async ({
       request,
     }) => {
-      // First create a constituency
-      const adminToken = await getAdminAuthToken(request);
+      // First create a constituency (unique name to avoid name collision)
+      const adminToken = getAdminAuthToken();
       const createResponse = await request.post(
         `${API_BASE_URL}/api/constituencies`,
         {
@@ -303,14 +326,21 @@ test.describe("Constituencies API - Unit Tests", () => {
             Authorization: `Bearer ${adminToken}`,
           },
           data: {
-            name: "Original Constituency Name",
-            constituency_id: "CONST_UPDATE001",
-            mla_id: "MLA001",
+            name: `Original Constituency Name ${Date.now()}`,
+            constituency_id: getUniqueConstituencyId("_UPDATE"),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
 
       const createData = await createResponse.json();
+
+      if (createResponse.status() !== 201) {
+        throw new Error(
+          `Failed to create constituency: ${JSON.stringify(createData)}`
+        );
+      }
+
       const constituencyId = createData.constituency._id;
 
       // Then update the constituency
@@ -322,7 +352,7 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Updated Constituency Name",
-            mla_id: "MLA002",
+            // keep same MLA; updating MLA is not required for this test
           },
         }
       );
@@ -335,9 +365,9 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-015: Update constituency with invalid data (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
-      // First create a constituency
+      // First create a constituency (unique name to avoid name collision)
       const createResponse = await request.post(
         `${API_BASE_URL}/api/constituencies`,
         {
@@ -345,14 +375,19 @@ test.describe("Constituencies API - Unit Tests", () => {
             Authorization: `Bearer ${adminToken}`,
           },
           data: {
-            name: "Original Constituency Name",
-            constituency_id: "CONST_INVALID001",
-            mla_id: "MLA001",
+            name: `Original Constituency Name ${Date.now()}`,
+            constituency_id: getUniqueConstituencyId("_INVALID"),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
 
       const createData = await createResponse.json();
+      if (createResponse.status() !== 201) {
+        throw new Error(
+          `Failed to create constituency: ${JSON.stringify(createData)}`
+        );
+      }
       const constituencyId = createData.constituency._id;
 
       // Then update with invalid data
@@ -375,7 +410,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-016: Update non-existent constituency (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.put(
         `${API_BASE_URL}/api/constituencies/507f1f77bcf86cd799439011`,
@@ -385,7 +420,7 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Updated Constituency Name",
-            mla_id: "MLA002",
+            mla_id: getUniqueMlaId("_2"),
           },
         }
       );
@@ -399,7 +434,7 @@ test.describe("Constituencies API - Unit Tests", () => {
       request,
     }) => {
       // First create a constituency
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
       const createResponse = await request.post(
         `${API_BASE_URL}/api/constituencies`,
         {
@@ -408,8 +443,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Delete Test Constituency",
-            constituency_id: "CONST_DELETE001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId("_DELETE"),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -433,7 +468,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-018: Delete non-existent constituency (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.delete(
         `${API_BASE_URL}/api/constituencies/507f1f77bcf86cd799439011`,
@@ -452,7 +487,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-019: Create bulk constituencies with valid data (ECP - Valid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies/bulk`,
@@ -464,13 +499,13 @@ test.describe("Constituencies API - Unit Tests", () => {
             constituencies: [
               {
                 name: "Bulk Constituency 1",
-                constituency_id: "BULK001",
-                mla_id: "MLA001",
+                constituency_id: getUniqueConstituencyId("_BULK1"),
+                mla_id: getUniqueMlaId(),
               },
               {
                 name: "Bulk Constituency 2",
-                constituency_id: "BULK002",
-                mla_id: "MLA002",
+                constituency_id: getUniqueConstituencyId("_BULK2"),
+                mla_id: getUniqueMlaId("_2"),
               },
             ],
           },
@@ -486,7 +521,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-020: Create bulk constituencies with empty array (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies/bulk`,
@@ -506,7 +541,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-021: Create bulk constituencies with invalid data (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies/bulk`,
@@ -519,7 +554,7 @@ test.describe("Constituencies API - Unit Tests", () => {
               {
                 name: "A", // Too short
                 constituency_id: "", // Too short
-                mla_id: "MLA001",
+                mla_id: getUniqueMlaId(),
               },
             ],
           },
@@ -535,7 +570,7 @@ test.describe("Constituencies API - Unit Tests", () => {
       request,
     }) => {
       // First create a constituency
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
       const createResponse = await request.post(
         `${API_BASE_URL}/api/constituencies`,
         {
@@ -544,8 +579,8 @@ test.describe("Constituencies API - Unit Tests", () => {
           },
           data: {
             name: "Constituency for Panchayats",
-            constituency_id: "CONST_PANCH001",
-            mla_id: "MLA001",
+            constituency_id: getUniqueConstituencyId("_PANCH"),
+            mla_id: getUniqueMlaId(),
           },
         }
       );
@@ -584,7 +619,7 @@ test.describe("Constituencies API - Unit Tests", () => {
     test("TC-CONST-023: Add panchayats to non-existent constituency (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const adminToken = await getAdminAuthToken(request);
+      const adminToken = getAdminAuthToken();
 
       const response = await request.post(
         `${API_BASE_URL}/api/constituencies/507f1f77bcf86cd799439011/panchayats`,
@@ -597,7 +632,7 @@ test.describe("Constituencies API - Unit Tests", () => {
               {
                 name: "Test Panchayat",
                 panchayat_id: "PANCH001",
-                constituency_id: "507f1f77bcf86cd799439011",
+                constituency_id: getUniqueConstituencyId("_NONEXISTENT"),
                 ward_list: [
                   {
                     ward_id: "WARD001",

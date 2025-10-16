@@ -11,11 +11,10 @@ const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3333";
 export let testConstituencyId: string;
 export let testPanchayatId: string;
 export let testWardId: string;
+export let testMlaUserId: string;
 
 // Setup test data before all tests
 export async function setupTestData(request: any) {
-  console.log("Setting up test data...");
-
   try {
     // Ensure DB connection for direct model writes (departments, roles)
     if (mongoose.connection.readyState === 0) {
@@ -29,234 +28,165 @@ export async function setupTestData(request: any) {
       if (process.env.NODE_ENV === "test" && mongoose.connection.db) {
         await mongoose.connection.db.dropDatabase();
       }
-    } catch {}
+    } catch (error) {
+      console.error("Error dropping test database:", error);
+    }
 
     // Ensure signup tests can pass consistently by removing known conflicting identities
     try {
-      await userModel.deleteMany({
-        $or: [{ email: "test@example.com" }, { phone_number: "+1234567890" }],
+      const result = await userModel.deleteMany({
+        $or: [
+          { email: "test@example.com" },
+          { email: "logintest@example.com" },
+          { email: "profiletest@example.com" },
+          { email: "changepass@example.com" },
+          { email: "wrongcurrent@example.com" },
+          { email: "passwordtest@example.com" },
+          { email: "nametest@example.com" },
+          { phone_number: "+1234567890" },
+          { phone_number: "+1234567891" },
+          { phone_number: "+1234567892" },
+        ],
       });
-    } catch {}
-    // Idempotently ensure test constituency exists (find by constituency_id)
-    const existingConstRes = await request.get(
-      `${API_BASE_URL}/api/constituencies`
-    );
-    if (existingConstRes.status() === 200) {
-      const existingData = await existingConstRes.json();
-      const list = existingData.constituencies || existingData.data || [];
-      const found = list.find(
-        (c: any) => c.constituency_id === "TEST_CONST001"
-      );
-      if (found) {
-        testConstituencyId = found._id;
-      }
+    } catch (error) {
+      console.error("Error cleaning up test users:", error);
     }
+    // Create test constituency directly in database
+    const Constituency = require("../../src/models/constituencyModel").default;
+    let existingConstituency = await Constituency.findOne({
+      constituency_id: "TEST_CONST001",
+    });
 
-    if (!testConstituencyId) {
-      const constituencyResponse = await request.post(
-        `${API_BASE_URL}/api/constituencies`,
-        {
-          headers: {
-            Authorization: "Bearer mock-admin-token",
-          },
-          data: {
-            name: "Test Constituency",
-            constituency_id: "TEST_CONST001",
-            mla_id: "507f1f77bcf86cd799439011",
-          },
-        }
-      );
-
-      if (constituencyResponse.status() === 201) {
-        const constituencyData = await constituencyResponse.json();
-        testConstituencyId = constituencyData.constituency._id;
-        console.log("Test constituency created:", testConstituencyId);
-      }
+    if (!existingConstituency) {
+      existingConstituency = await Constituency.create({
+        name: "Test Constituency",
+        constituency_id: "TEST_CONST001",
+        mla_id: "507f1f77bcf86cd799439011",
+      });
     }
+    testConstituencyId = existingConstituency._id.toString();
 
-    // Idempotently ensure test panchayat exists (find by panchayat_id)
-    const existingPanchRes = await request.get(
-      `${API_BASE_URL}/api/panchayats`
-    );
-    if (existingPanchRes.status() === 200) {
-      const existingP = await existingPanchRes.json();
-      const plist = existingP.panchayats || existingP.data || [];
-      const pfound = plist.find((p: any) => p.panchayat_id === "TEST_PANCH001");
-      if (pfound) {
-        testPanchayatId = pfound._id;
-        testWardId =
-          (pfound.ward_list && pfound.ward_list[0]?.ward_id) || "WARD001";
-      }
-    }
+    // Create test panchayat directly in database
+    const Panchayat = require("../../src/models/panchayatModel").default;
+    let existingPanchayat = await Panchayat.findOne({
+      panchayat_id: "TEST_PANCH001",
+    });
 
-    if (!testPanchayatId) {
-      const panchayatResponse = await request.post(
-        `${API_BASE_URL}/api/panchayats`,
-        {
-          headers: {
-            Authorization: "Bearer mock-admin-token",
+    if (!existingPanchayat) {
+      existingPanchayat = await Panchayat.create({
+        name: "Test Panchayat",
+        panchayat_id: "TEST_PANCH001",
+        constituency_id: testConstituencyId,
+        ward_list: [
+          {
+            ward_id: "WARD001",
+            ward_name: "Test Ward 1",
           },
-          data: {
-            name: "Test Panchayat",
-            panchayat_id: "TEST_PANCH001",
-            constituency_id: testConstituencyId,
-            ward_list: [
-              {
-                ward_id: "WARD001",
-                ward_name: "Test Ward 1",
-              },
-              {
-                ward_id: "WARD002",
-                ward_name: "Test Ward 2",
-              },
-            ],
+          {
+            ward_id: "WARD002",
+            ward_name: "Test Ward 2",
           },
-        }
-      );
-
-      if (panchayatResponse.status() === 201) {
-        const panchayatData = await panchayatResponse.json();
-        testPanchayatId = panchayatData.panchayat._id;
-        testWardId = "WARD001";
-        console.log("Test panchayat created:", testPanchayatId);
-      }
+        ],
+      });
     }
+    testPanchayatId = existingPanchayat._id.toString();
+    testWardId = "WARD001";
 
-    // 4) Create users and roles
+    // 4) Create users and roles directly in database
     // 4.1 MLA user
     const mlaEmail = "mla_test@example.com";
-    let mlaToken: string | undefined;
     let mlaUserId: string | undefined;
-    {
-      const res = await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
-        data: {
-          email: mlaEmail,
-          password: "password123",
-          name: "MLA Test User",
-          phone_number: "+1111111111",
-          constituency_id: testConstituencyId,
-          panchayat_id: testPanchayatId,
-          ward_no: "WARD001",
-        },
-      });
-      if (res.status() === 201) {
-        const d = await res.json();
-        mlaToken = d.token;
-        mlaUserId = d.user.id;
-      } else {
-        // try login if exists
-        const login = await request.post(
-          `${API_BASE_URL}/api/auth/login/email`,
-          {
-            data: { email: mlaEmail, password: "password123" },
-          }
-        );
-        if (login.status() === 200) {
-          const d = await login.json();
-          mlaToken = d.token;
-          // fetch profile
-          const meRes = await request.get(`${API_BASE_URL}/api/auth/me`, {
-            headers: { Authorization: `Bearer ${mlaToken}` },
-          });
-          if (meRes.status() === 200) {
-            const me = await meRes.json();
-            mlaUserId = me.user.id;
-          }
-        }
-      }
 
-      // Set role to MLA staff directly in DB
-      if (mlaUserId) {
-        await userModel.findByIdAndUpdate(mlaUserId, {
-          role: RoleTypes.MLASTAFF,
-        });
-      }
+    // Check if MLA user exists, if not create it
+    let mlaUser = await userModel.findOne({ email: mlaEmail });
+    if (!mlaUser) {
+      const { hashPassword } = require("../../src/utils/auth");
+      const hashedPassword = await hashPassword("password123");
+
+      mlaUser = await userModel.create({
+        name: "MLA Test User",
+        email: mlaEmail,
+        password_hash: hashedPassword,
+        phone_number: "+1111111111",
+        role: RoleTypes.MLASTAFF,
+      });
+
+      // Create user details
+      const UserDetails = require("../../src/models/userDetailsModel").default;
+      await UserDetails.create({
+        user_id: mlaUser._id,
+        constituency: testConstituencyId,
+        panchayat_id: testPanchayatId,
+        ward_no: "WARD001",
+      });
     }
+    mlaUserId = mlaUser._id.toString();
+    testMlaUserId = mlaUserId!;
 
     // Update constituency with MLA id if possible
     if (mlaUserId) {
-      await request.put(
-        `${API_BASE_URL}/api/constituencies/${testConstituencyId}`,
-        {
-          headers: { Authorization: "Bearer mock-admin-token" },
-          data: { mla_id: mlaUserId },
-        }
-      );
+      await Constituency.findByIdAndUpdate(testConstituencyId, {
+        mla_id: mlaUserId,
+      });
     }
 
     // 4.2 Department head (dept) and dept staff
     const deptHeadEmail = "dept_head@example.com";
     let deptHeadUserId: string | undefined;
-    {
-      const res = await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
-        data: {
-          email: deptHeadEmail,
-          password: "password123",
-          name: "Dept Head",
-          phone_number: "+1222222222",
-          constituency_id: testConstituencyId,
-          panchayat_id: testPanchayatId,
-          ward_no: "WARD001",
-        },
+
+    // Check if dept head exists, if not create it
+    let deptHeadUser = await userModel.findOne({ email: deptHeadEmail });
+    if (!deptHeadUser) {
+      const { hashPassword } = require("../../src/utils/auth");
+      const hashedPassword = await hashPassword("password123");
+
+      deptHeadUser = await userModel.create({
+        name: "Dept Head",
+        email: deptHeadEmail,
+        password_hash: hashedPassword,
+        phone_number: "+1222222222",
+        role: RoleTypes.DEPT,
       });
-      if (res.status() === 201) {
-        const u = await res.json();
-        deptHeadUserId = u.user.id;
-      } else {
-        const login = await request.post(
-          `${API_BASE_URL}/api/auth/login/email`,
-          {
-            data: { email: deptHeadEmail, password: "password123" },
-          }
-        );
-        if (login.status() === 200) {
-          const u = await login.json();
-          deptHeadUserId = u.user.id;
-        }
-      }
-      if (deptHeadUserId) {
-        await userModel.findByIdAndUpdate(deptHeadUserId, {
-          role: RoleTypes.DEPT,
-        });
-      }
+
+      // Create user details
+      const UserDetails = require("../../src/models/userDetailsModel").default;
+      await UserDetails.create({
+        user_id: deptHeadUser._id,
+        constituency: testConstituencyId,
+        panchayat_id: testPanchayatId,
+        ward_no: "WARD001",
+      });
     }
+    deptHeadUserId = deptHeadUser._id.toString();
 
     // Dept staff user
     const deptStaffEmail = "dept_staff@example.com";
     let deptStaffUserId: string | undefined;
-    {
-      const res = await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
-        data: {
-          email: deptStaffEmail,
-          password: "password123",
-          name: "Dept Staff",
-          phone_number: "+1333333333",
-          constituency_id: testConstituencyId,
-          panchayat_id: testPanchayatId,
-          ward_no: "WARD001",
-        },
+
+    // Check if dept staff exists, if not create it
+    let deptStaffUser = await userModel.findOne({ email: deptStaffEmail });
+    if (!deptStaffUser) {
+      const { hashPassword } = require("../../src/utils/auth");
+      const hashedPassword = await hashPassword("password123");
+
+      deptStaffUser = await userModel.create({
+        name: "Dept Staff",
+        email: deptStaffEmail,
+        password_hash: hashedPassword,
+        phone_number: "+1333333333",
+        role: RoleTypes.DEPT_STAFF,
       });
-      if (res.status() === 201) {
-        const u = await res.json();
-        deptStaffUserId = u.user.id;
-      } else {
-        const login = await request.post(
-          `${API_BASE_URL}/api/auth/login/email`,
-          {
-            data: { email: deptStaffEmail, password: "password123" },
-          }
-        );
-        if (login.status() === 200) {
-          const u = await login.json();
-          deptStaffUserId = u.user.id;
-        }
-      }
-      if (deptStaffUserId) {
-        await userModel.findByIdAndUpdate(deptStaffUserId, {
-          role: RoleTypes.DEPT_STAFF,
-        });
-      }
+
+      // Create user details
+      const UserDetails = require("../../src/models/userDetailsModel").default;
+      await UserDetails.create({
+        user_id: deptStaffUser._id,
+        constituency: testConstituencyId,
+        panchayat_id: testPanchayatId,
+        ward_no: "WARD001",
+      });
     }
+    deptStaffUserId = deptStaffUser._id.toString();
 
     // 3) Create test department and attach head and an employee
     let departmentId: string | undefined;
@@ -293,8 +223,6 @@ export async function setupTestData(request: any) {
     }
 
     // 4.3 Normal user is created via createTestUser during tests
-
-    console.log("Test data setup completed");
   } catch (error) {
     console.error("Error setting up test data:", error);
   }
@@ -303,9 +231,10 @@ export async function setupTestData(request: any) {
 // Helper function to get test data IDs
 export function getTestDataIds() {
   return {
-    constituency_id: testConstituencyId || "507f1f77bcf86cd799439011",
-    panchayat_id: testPanchayatId || "507f1f77bcf86cd799439012",
+    constituency_id: testConstituencyId || "68c01b684a4dc6b542fd36a4",
+    panchayat_id: testPanchayatId || "68c01b694a4dc6b542fd36c5",
     ward_no: testWardId || "WARD001",
+    mla_user_id: testMlaUserId || "68c01b684a4dc6b542fd36a6",
   };
 }
 
@@ -315,42 +244,41 @@ export async function createTestUser(
   email: string = "test@example.com"
 ) {
   const testData = getTestDataIds();
-  const uniquePhone = () => `+1${Date.now().toString().slice(-10)}`;
+  const uniquePhone = () => `+1${Math.floor(Math.random() * 9e9 + 1e9)}`;
 
-  // First attempt: signup with unique phone to avoid collisions
-  let response = await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
-    data: {
-      email: email,
-      password: "password123",
-      name: "Test User",
-      phone_number: uniquePhone(),
-      constituency_id: testData.constituency_id,
-      panchayat_id: testData.panchayat_id,
-      ward_no: testData.ward_no,
-    },
-  });
+  const attemptSignup = async (signupEmail: string, phone: string) => {
+    return await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
+      data: {
+        email: signupEmail,
+        password: "password123",
+        name: "Test User",
+        phone_number: phone,
+        constituency_id: testData.constituency_id,
+        panchayat_id: testData.panchayat_id,
+        ward_no: testData.ward_no,
+      },
+    });
+  };
 
+  // 1) Try signup
+  let response = await attemptSignup(email, uniquePhone());
   if (response.status() === 201) {
     const data = await response.json();
     return data.token;
   }
 
-  // If failure, inspect error and recover
-  let errorBody: any = {};
+  // 2) If email exists, try login
   try {
-    errorBody = await response.json();
-  } catch {}
-  const errorMsg = (errorBody?.message || errorBody?.error || "")
-    .toString()
-    .toLowerCase();
-
-  // If email exists, login instead
-  if (response.status() === 400 || response.status() === 409) {
-    if (errorMsg.includes("email")) {
+    const body = await response.json();
+    const msg = (body?.message || body?.error || "").toString().toLowerCase();
+    if (
+      (response.status() === 400 || response.status() === 409) &&
+      msg.includes("email")
+    ) {
       const loginRes = await request.post(
         `${API_BASE_URL}/api/auth/login/email`,
         {
-          data: { email: email, password: "password123" },
+          data: { email, password: "password123" },
         }
       );
       if (loginRes.status() === 200) {
@@ -358,25 +286,25 @@ export async function createTestUser(
         return data.token;
       }
     }
+  } catch {}
 
-    // If phone exists, retry signup once with a fresh unique phone
-    if (errorMsg.includes("phone")) {
-      response = await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
-        data: {
-          email: email,
-          password: "password123",
-          name: "Test User",
-          phone_number: uniquePhone(),
-          constituency_id: testData.constituency_id,
-          panchayat_id: testData.panchayat_id,
-          ward_no: testData.ward_no,
-        },
-      });
-      if (response.status() === 201) {
-        const data = await response.json();
-        return data.token;
-      }
-    }
+  // 3) Retry with a fresh retry email and phone
+  const retryEmail = email.includes("@")
+    ? email.replace("@", "+retry@")
+    : `${email}+retry`;
+  response = await attemptSignup(retryEmail, uniquePhone());
+  if (response.status() === 201) {
+    const data = await response.json();
+    return data.token;
+  }
+
+  // 4) Final fallback: login with retry email
+  const loginRes = await request.post(`${API_BASE_URL}/api/auth/login/email`, {
+    data: { email: retryEmail, password: "password123" },
+  });
+  if (loginRes.status() === 200) {
+    const data = await loginRes.json();
+    return data.token;
   }
 
   throw new Error("Failed to create test user");

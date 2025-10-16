@@ -12,8 +12,10 @@ import {
   updateIssueStatus,
   updateHandledBy,
   addFeedback,
+  getIssueFeedback,
   deleteIssue,
   getIssueStatistics,
+  getIssueByDepartmentId,
 } from "../controllers/issue.controller";
 import {
   createIssueSchema,
@@ -126,6 +128,9 @@ router.get("/", validateIssueFilter, getAllIssues);
 // Get issues by user ID (public)
 router.get("/user/:user_id", getIssuesByUserId);
 
+// Get issues by department ID (requires authentication)
+router.get("/department/:department_id", auth, getIssueByDepartmentId);
+
 // Get issues by constituency (public)
 router.get("/constituency/:constituency_id", getIssuesByConstituency);
 
@@ -148,6 +153,9 @@ router.patch(
 
 // Add feedback (requires authentication - when status is resolved)
 router.post("/:id/feedback", auth, validateAddFeedback, addFeedback);
+
+// Get feedback for an issue (requires authentication)
+router.get("/:id/feedback", auth, getIssueFeedback);
 
 // Delete issue (requires authentication - user can delete their own, admin can delete any)
 router.delete("/:id", auth, deleteIssue);

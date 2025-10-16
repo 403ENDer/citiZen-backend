@@ -22,7 +22,7 @@ export const updateIssueSchema = Joi.object({
 // Schema for updating issue status (user-driven)
 export const updateIssueStatusSchema = Joi.object({
   status: Joi.string()
-    .valid("pending", "in_progress", "resolved", "rejected")
+    .valid("pending", "in_progress", "resolved", "rejected", "completed")
     .required(),
 });
 
@@ -33,8 +33,8 @@ export const updateHandledBySchema = Joi.object({
 
 // Schema for adding feedback (when status is completed)
 export const addFeedbackSchema = Joi.object({
-  feedback: Joi.string().required().min(1).max(1000),
-  satisfaction_score: Joi.string().valid("good", "average", "poor").required(),
+  feedback: Joi.string().min(1).max(1000).required(),
+  satisfaction_score: Joi.number().required(),
 });
 
 export const bulkCreateIssueSchema = Joi.object({

@@ -465,6 +465,14 @@ export const addPanchayatsToConstituency = async (
     const { constituency_id } = req.params;
     const { panchayats } = req.body;
 
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(constituency_id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid constituency ID format",
+      });
+    }
+
     // Verify constituency exists
     const constituency = await Constituency.findById(constituency_id);
     if (!constituency) {
@@ -599,6 +607,14 @@ export const getConstituencyById = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
 
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid constituency ID format",
+      });
+    }
+
     const constituency = await Constituency.findById(id)
       .populate("panchayats", "name panchayat_id ward_list")
       .populate("mla_id", "name email");
@@ -699,6 +715,14 @@ export const updateConstituency = async (req: AuthRequest, res: Response) => {
     const { id } = req.params;
     const updateData = req.body;
 
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid constituency ID format",
+      });
+    }
+
     const constituency = await Constituency.findById(id);
     if (!constituency) {
       return res.status(404).json({
@@ -763,6 +787,14 @@ export const updateConstituency = async (req: AuthRequest, res: Response) => {
 export const deleteConstituency = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
+
+    // Validate ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid constituency ID format",
+      });
+    }
 
     const constituency = await Constituency.findById(id);
     if (!constituency) {

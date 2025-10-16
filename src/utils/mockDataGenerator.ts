@@ -331,17 +331,11 @@ export const seedMockMLADashboardData = async (constituencyId: string) => {
     });
 
     if (existingData) {
-      console.log(
-        `MLA Dashboard data already exists for constituency ${constituencyId}`
-      );
       return existingData;
     }
 
     // Create new mock data
     const newDashboardData = await MLADashboardModel.create(mockData);
-    console.log(
-      `Mock MLA Dashboard data created for constituency ${constituencyId}`
-    );
     return newDashboardData;
   } catch (error) {
     console.error(`Error seeding mock MLA Dashboard data:`, error);

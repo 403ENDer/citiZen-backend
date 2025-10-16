@@ -10,6 +10,7 @@ import panchayatRoutes from "./routes/panchayat.router";
 import issueRoutes from "./routes/issue.router";
 import upvoteRoutes from "./routes/upvote.router";
 import mlaDashboardRoutes from "./routes/mlaDashboard.router";
+import departmentRoutes from "./routes/department.router";
 import { specs } from "./config/swagger";
 import multer from "multer";
 
@@ -48,6 +49,7 @@ app.use("/api/panchayats", panchayatRoutes);
 app.use("/api/issues", issueRoutes);
 app.use("/api/upvotes", upvoteRoutes);
 app.use("/api/mla-dashboard", mlaDashboardRoutes);
+app.use("/api/departments", departmentRoutes);
 
 app.get("/health", (req, res) => {
   res.json({ status: "OK", message: "CitiZen API is running" });

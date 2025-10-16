@@ -29,7 +29,6 @@ test.describe("Admin Workflow Integration Tests", () => {
         },
       }
     );
-    console.log(constituencyResponse);
     expect(constituencyResponse.status()).toBe(201);
     const constituencyData = await constituencyResponse.json();
     expect(constituencyData).toHaveProperty("constituency");

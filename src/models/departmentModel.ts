@@ -12,8 +12,17 @@ const DepartmentSchema = new Schema<IDepartment>(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+// Virtual field to populate employees
+DepartmentSchema.virtual("employees", {
+  ref: "DepartmentEmployee",
+  localField: "_id",
+  foreignField: "dept_id",
+});
 
 export default mongoose.models.Department ||
   mongoose.model<IDepartment>("Department", DepartmentSchema);

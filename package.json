@@ -9,6 +9,8 @@
     "dev": "nodemon src/app.ts",
     "setup": "node setup-env.js",
     "seed:testdata": "node -e \"require('ts-node/register'); require('./scripts/runTestData.ts')\"",
+    "seed:database": "node -e \"require('ts-node/register'); require('./scripts/seedDatabase.ts')\"",
+    "start:test": "node -e \"require('ts-node/register'); require('./scripts/startAndSeed.ts')\"",
     "test": "npx playwright test",
     "test:unit": "npx playwright test tests/unit/",
     "test:integration": "npx playwright test tests/integration/",

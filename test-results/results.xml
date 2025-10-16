@@ -1,654 +1,427 @@
-<testsuites id="" name="" tests="88" failures="16" skipped="0" errors="0" time="58.863761">
-<testsuite name="unit\auth.spec.ts" timestamp="2025-09-09T07:26:28.319Z" hostname="api-tests" tests="20" failures="4" skipped="0" time="7.796" errors="0">
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-001: Valid signup with all required fields (ECP - Valid Class)" classname="unit\auth.spec.ts" time="0.265">
-<failure message="auth.spec.ts:84:9 TC-AUTH-001: Valid signup with all required fields (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\auth.spec.ts:84:9 › Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-001: Valid signup with all required fields (ECP - Valid Class) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 201
-    Received: 400
-
-       99 |         }
-      100 |       );
-    > 101 |       expect(response.status()).toBe(201);
-          |                                 ^
-      102 |       const responseData = await response.json();
-      103 |       expect(responseData).toHaveProperty("message");
-      104 |       expect(responseData).toHaveProperty("token");
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\auth.spec.ts:101:33
-]]>
-</failure>
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-002: Invalid email format (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.055">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-003: Password too short (BVA - Just below boundary)" classname="unit\auth.spec.ts" time="0.034">
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-004: Password at minimum boundary (BVA - At boundary)" classname="unit\auth.spec.ts" time="0.253">
-<failure message="auth.spec.ts:153:9 TC-AUTH-004: Password at minimum boundary (BVA - At boundary)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\auth.spec.ts:153:9 › Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-004: Password at minimum boundary (BVA - At boundary) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 201
-    Received: 400
-
-      169 |       );
-      170 |
-    > 171 |       expect(response.status()).toBe(201);
-          |                                 ^
-      172 |     });
-      173 |
-      174 |     test("TC-AUTH-005: Name too short (BVA - Just below boundary)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\auth.spec.ts:171:33
-]]>
-</failure>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-005: Name too short (BVA - Just below boundary)" classname="unit\auth.spec.ts" time="0.168">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-006: Name at minimum boundary (BVA - At boundary)" classname="unit\auth.spec.ts" time="0.217">
-<failure message="auth.spec.ts:195:9 TC-AUTH-006: Name at minimum boundary (BVA - At boundary)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\auth.spec.ts:195:9 › Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-006: Name at minimum boundary (BVA - At boundary) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 201
-    Received: 400
-
-      211 |       );
-      212 |       console.log(response);
-    > 213 |       expect(response.status()).toBe(201);
-          |                                 ^
-      214 |     });
-      215 |
-      216 |     test("TC-AUTH-007: Missing required fields (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\auth.spec.ts:213:33
-]]>
-</failure>
-<system-out>
-<![CDATA[APIResponse: 400 Bad Request
-  X-Powered-By: Express
-  Access-Control-Allow-Origin: *
-  Content-Type: application/json; charset=utf-8
-  Content-Length: 47
-  ETag: W/"2f-4yhx94le+lOp+hMu8rhzVN9UJsM"
-  Date: Tue, 09 Sep 2025 07:26:36 GMT
-  Connection: keep-alive
-  Keep-Alive: timeout=5
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-007: Missing required fields (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.06">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-008: Duplicate email signup (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.079">
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-009: Valid login credentials (ECP - Valid Class)" classname="unit\auth.spec.ts" time="0.673">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-010: Invalid email format (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.07">
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-011: Wrong password (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.396">
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-012: Non-existent user (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.303">
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-013: Missing credentials (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.216">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-014: Valid authenticated request (ECP - Valid Class)" classname="unit\auth.spec.ts" time="1.352">
-</testcase>
-<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-015: Missing authorization header (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.023">
-</testcase>
-<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-016: Invalid token format (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.028">
-</testcase>
-<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-017: Malformed authorization header (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.138">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-018: Valid password change (ECP - Valid Class)" classname="unit\auth.spec.ts" time="0.697">
-<failure message="auth.spec.ts:459:9 TC-AUTH-018: Valid password change (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\auth.spec.ts:459:9 › Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-018: Valid password change (ECP - Valid Class) 
+<testsuites id="" name="" tests="100" failures="11" skipped="0" errors="0" time="175.288108">
+<testsuite name="integration\admin-workflow.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="4" failures="3" skipped="0" time="13.852" errors="0">
+<testcase name="Admin Workflow Integration Tests › TC-INT-005: Complete constituency and panchayat management workflow" classname="integration\admin-workflow.spec.ts" time="3.209">
+<failure message="admin-workflow.spec.ts:13:7 TC-INT-005: Complete constituency and panchayat management workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\admin-workflow.spec.ts:13:7 › Admin Workflow Integration Tests › TC-INT-005: Complete constituency and panchayat management workflow 
 
     Error: expect(received).toBe(expected) // Object.is equality
 
     Expected: 200
+    Received: 500
+
+      114 |     );
+      115 |
+    > 116 |     expect(updateConstituencyResponse.status()).toBe(200);
+          |                                                 ^
+      117 |     const updateConstituencyData = await updateConstituencyResponse.json();
+      118 |     expect(updateConstituencyData.constituency.name).toBe(
+      119 |       "Updated Test Constituency"
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\admin-workflow.spec.ts:116:49
+]]>
+</failure>
+</testcase>
+<testcase name="Admin Workflow Integration Tests › TC-INT-006: Bulk operations workflow" classname="integration\admin-workflow.spec.ts" time="3.207">
+</testcase>
+<testcase name="Admin Workflow Integration Tests › TC-INT-007: Issue management and assignment workflow" classname="integration\admin-workflow.spec.ts" time="4.193">
+<failure message="admin-workflow.spec.ts:257:7 TC-INT-007: Issue management and assignment workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\admin-workflow.spec.ts:257:7 › Admin Workflow Integration Tests › TC-INT-007: Issue management and assignment workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      307 |     );
+      308 |
+    > 309 |     expect(assignResponse.status()).toBe(200);
+          |                                     ^
+      310 |     const assignData = await assignResponse.json();
+      311 |     expect(assignData.issue.handled_by).toBe("Department Head 1");
+      312 |
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\admin-workflow.spec.ts:309:37
+]]>
+</failure>
+</testcase>
+<testcase name="Admin Workflow Integration Tests › TC-INT-008: Data integrity and cleanup workflow" classname="integration\admin-workflow.spec.ts" time="3.243">
+<failure message="admin-workflow.spec.ts:389:7 TC-INT-008: Data integrity and cleanup workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\admin-workflow.spec.ts:389:7 › Admin Workflow Integration Tests › TC-INT-008: Data integrity and cleanup workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+      489 |     );
+      490 |
+    > 491 |     expect(updateConstituencyResponse.status()).toBe(200);
+          |                                                 ^
+      492 |     const updateConstituencyData = await updateConstituencyResponse.json();
+      493 |     expect(updateConstituencyData.constituency.name).toBe(
+      494 |       "Updated Cleanup Test Constituency"
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\admin-workflow.spec.ts:491:49
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="integration\user-workflow.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="4" failures="4" skipped="0" time="7.768" errors="0">
+<testcase name="User Workflow Integration Tests › TC-INT-001: Complete user registration and issue creation workflow" classname="integration\user-workflow.spec.ts" time="3.006">
+<failure message="user-workflow.spec.ts:30:7 TC-INT-001: Complete user registration and issue creation workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\user-workflow.spec.ts:30:7 › User Workflow Integration Tests › TC-INT-001: Complete user registration and issue creation workflow 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 201
+    Received: 500
+
+      50 |     );
+      51 |
+    > 52 |     expect(signupResponse.status()).toBe(201);
+         |                                     ^
+      53 |     const signupData = await signupResponse.json();
+      54 |     expect(signupData).toHaveProperty("token");
+      55 |     expect(signupData).toHaveProperty("user");
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\user-workflow.spec.ts:52:37
+]]>
+</failure>
+</testcase>
+<testcase name="User Workflow Integration Tests › TC-INT-002: Issue lifecycle with upvoting workflow" classname="integration\user-workflow.spec.ts" time="3.014">
+<failure message="user-workflow.spec.ts:152:7 TC-INT-002: Issue lifecycle with upvoting workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\user-workflow.spec.ts:152:7 › User Workflow Integration Tests › TC-INT-002: Issue lifecycle with upvoting workflow 
+
+    TypeError: Cannot read properties of undefined (reading '_id')
+
+      188 |
+      189 |     const issueData = await issueResponse.json();
+    > 190 |     const issueId = issueData.issue._id;
+          |                                     ^
+      191 |
+      192 |     // Step 2: Add upvote to the issue
+      193 |     const upvoteResponse = await request.post(
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\user-workflow.spec.ts:190:37
+]]>
+</failure>
+</testcase>
+<testcase name="User Workflow Integration Tests › TC-INT-003: Multi-user issue interaction workflow" classname="integration\user-workflow.spec.ts" time="0.365">
+<failure message="user-workflow.spec.ts:293:7 TC-INT-003: Multi-user issue interaction workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\user-workflow.spec.ts:293:7 › User Workflow Integration Tests › TC-INT-003: Multi-user issue interaction workflow 
+
+    TypeError: Cannot read properties of undefined (reading 'id')
+
+      315 |     const user1Data = await user1Signup.json();
+      316 |     const user1Token = user1Data.token;
+    > 317 |     const user1Id = user1Data.user.id;
+          |                                    ^
+      318 |
+      319 |     // Step 2: Create second user
+      320 |     const user2Signup = await request.post(
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\user-workflow.spec.ts:317:36
+]]>
+</failure>
+</testcase>
+<testcase name="User Workflow Integration Tests › TC-INT-004: Issue filtering and pagination workflow" classname="integration\user-workflow.spec.ts" time="1.383">
+<failure message="user-workflow.spec.ts:456:7 TC-INT-004: Issue filtering and pagination workflow" type="FAILURE">
+<![CDATA[  [api-tests] › integration\user-workflow.spec.ts:456:7 › User Workflow Integration Tests › TC-INT-004: Issue filtering and pagination workflow 
+
+    TypeError: Cannot read properties of undefined (reading '_id')
+
+      504 |
+      505 |       const issueData = await issueResponse.json();
+    > 506 |       const issueId = issueData.issue._id;
+          |                                       ^
+      507 |
+      508 |       // Update status if not pending
+      509 |       if (issue.status !== "pending") {
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\integration\user-workflow.spec.ts:506:39
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="system\end-to-end.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="4" failures="4" skipped="0" time="10.703" errors="0">
+<testcase name="End-to-End System Tests › TC-SYS-001: Complete citizen journey from registration to issue resolution" classname="system\end-to-end.spec.ts" time="1.978">
+<failure message="end-to-end.spec.ts:30:7 TC-SYS-001: Complete citizen journey from registration to issue resolution" type="FAILURE">
+<![CDATA[  [api-tests] › system\end-to-end.spec.ts:30:7 › End-to-End System Tests › TC-SYS-001: Complete citizen journey from registration to issue resolution 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 201
+    Received: 500
+
+      52 |     );
+      53 |
+    > 54 |     expect(signupResponse.status()).toBe(201);
+         |                                     ^
+      55 |     const signupData = await signupResponse.json();
+      56 |     expect(signupData).toHaveProperty("token");
+      57 |     expect(signupData).toHaveProperty("user");
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\system\end-to-end.spec.ts:54:37
+]]>
+</failure>
+<system-out>
+<![CDATA[Phase 1: User Registration and Authentication
+]]>
+</system-out>
+</testcase>
+<testcase name="End-to-End System Tests › TC-SYS-002: Multi-user collaborative issue management" classname="system\end-to-end.spec.ts" time="5.162">
+<failure message="end-to-end.spec.ts:212:7 TC-SYS-002: Multi-user collaborative issue management" type="FAILURE">
+<![CDATA[  [api-tests] › system\end-to-end.spec.ts:212:7 › End-to-End System Tests › TC-SYS-002: Multi-user collaborative issue management 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 403
+
+      308 |     );
+      309 |
+    > 310 |     expect(statusResponse.status()).toBe(200);
+          |                                     ^
+      311 |
+      312 |     // User 3 updates status to resolved
+      313 |     const resolveResponse = await request.patch(
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\system\end-to-end.spec.ts:310:37
+]]>
+</failure>
+<system-out>
+<![CDATA[Phase 1: Create multiple users
+Phase 2: User 1 creates an issue
+Phase 3: All users upvote the issue
+Phase 4: Issue status updates by different users
+]]>
+</system-out>
+</testcase>
+<testcase name="End-to-End System Tests › TC-SYS-003: System performance and data consistency" classname="system\end-to-end.spec.ts" time="1.636">
+<failure message="end-to-end.spec.ts:380:7 TC-SYS-003: System performance and data consistency" type="FAILURE">
+<![CDATA[  [api-tests] › system\end-to-end.spec.ts:380:7 › End-to-End System Tests › TC-SYS-003: System performance and data consistency 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 201
     Received: 401
 
-      500 |       );
-      501 |
-    > 502 |       expect(response.status()).toBe(200);
+      423 |
+      424 |     for (const response of issueResponses) {
+    > 425 |       expect(response.status()).toBe(201);
           |                                 ^
-      503 |     });
-      504 |
-      505 |     test("TC-AUTH-019: Wrong current password (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\auth.spec.ts:502:33
+      426 |       const issueData = await response.json();
+      427 |       issueIds.push(issueData.issue._id);
+      428 |     }
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\system\end-to-end.spec.ts:425:33
 ]]>
 </failure>
-</testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-019: Wrong current password (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="1.423">
 <system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
+<![CDATA[Phase 1: Create multiple issues concurrently
 ]]>
 </system-out>
 </testcase>
-<testcase name="Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-020: New password too short (BVA - Just below boundary)" classname="unit\auth.spec.ts" time="1.346">
-</testcase>
-</testsuite>
-<testsuite name="unit\constituencies.spec.ts" timestamp="2025-09-09T07:26:28.319Z" hostname="api-tests" tests="23" failures="8" skipped="0" time="5.502" errors="0">
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-001: Valid constituency creation (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.048">
-<failure message="constituencies.spec.ts:17:9 TC-CONST-001: Valid constituency creation (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:17:9 › Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-001: Valid constituency creation (ECP - Valid Class) 
+<testcase name="End-to-End System Tests › TC-SYS-004: Error handling and recovery scenarios" classname="system\end-to-end.spec.ts" time="1.927">
+<failure message="end-to-end.spec.ts:523:7 TC-SYS-004: Error handling and recovery scenarios" type="FAILURE">
+<![CDATA[  [api-tests] › system\end-to-end.spec.ts:523:7 › End-to-End System Tests › TC-SYS-004: Error handling and recovery scenarios 
 
     Error: expect(received).toBe(expected) // Object.is equality
 
     Expected: 201
-    Received: 400
-
-      34 |       );
-      35 |
-    > 36 |       expect(response.status()).toBe(201);
-         |                                 ^
-      37 |       const responseData = await response.json();
-      38 |       expect(responseData).toHaveProperty("constituency");
-      39 |       expect(responseData.constituency.name).toBe("Test Constituency");
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:36:33
-]]>
-</failure>
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-002: Name too short (BVA - Just below boundary)" classname="unit\constituencies.spec.ts" time="0.19">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-003: Name at minimum boundary (BVA - At boundary)" classname="unit\constituencies.spec.ts" time="0.16">
-<failure message="constituencies.spec.ts:64:9 TC-CONST-003: Name at minimum boundary (BVA - At boundary)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:64:9 › Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-003: Name at minimum boundary (BVA - At boundary) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 201
-    Received: 400
-
-      81 |       );
-      82 |
-    > 83 |       expect(response.status()).toBe(201);
-         |                                 ^
-      84 |     });
-      85 |
-      86 |     test("TC-CONST-004: Name too long (BVA - Just above boundary)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:83:33
-]]>
-</failure>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-004: Name too long (BVA - Just above boundary)" classname="unit\constituencies.spec.ts" time="0.035">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-005: Constituency ID too short (BVA - Just below boundary)" classname="unit\constituencies.spec.ts" time="0.179">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-006: Constituency ID at minimum boundary (BVA - At boundary)" classname="unit\constituencies.spec.ts" time="0.253">
-<failure message="constituencies.spec.ts:130:9 TC-CONST-006: Constituency ID at minimum boundary (BVA - At boundary)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:130:9 › Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-006: Constituency ID at minimum boundary (BVA - At boundary) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 201
-    Received: 400
-
-      147 |       );
-      148 |
-    > 149 |       expect(response.status()).toBe(201);
-          |                                 ^
-      150 |     });
-      151 |
-      152 |     test("TC-CONST-007: Missing required fields (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:149:33
-]]>
-</failure>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-007: Missing required fields (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.021">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-008: Unauthorized request (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.186">
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-009: Duplicate constituency ID (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.482">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › GET /api/constituencies - Get All Constituencies › TC-CONST-010: Get all constituencies (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.283">
-</testcase>
-<testcase name="Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-011: Get existing constituency by valid ID (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.231">
-<failure message="constituencies.spec.ts:240:9 TC-CONST-011: Get existing constituency by valid ID (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:240:9 › Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-011: Get existing constituency by valid ID (ECP - Valid Class) 
-
-    TypeError: Cannot read properties of undefined (reading '_id')
-
-      258 |
-      259 |       const createData = await createResponse.json();
-    > 260 |       const constituencyId = createData.constituency._id;
-          |                                                      ^
-      261 |
-      262 |       // Then get the constituency
-      263 |       const response = await request.get(
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:260:54
-]]>
-</failure>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-012: Get constituency with invalid ID format (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.191">
-<failure message="constituencies.spec.ts:272:9 TC-CONST-012: Get constituency with invalid ID format (ECP - Invalid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:272:9 › Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-012: Get constituency with invalid ID format (ECP - Invalid Class) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 400
     Received: 500
 
-      277 |       );
-      278 |
-    > 279 |       expect(response.status()).toBe(400);
-          |                                 ^
-      280 |     });
-      281 |
-      282 |     test("TC-CONST-013: Get non-existent constituency (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:279:33
+      616 |     );
+      617 |
+    > 618 |     expect(validSignupResponse.status()).toBe(201);
+          |                                          ^
+      619 |     const validSignupData = await validSignupResponse.json();
+      620 |     const token = validSignupData.token;
+      621 |
+        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\system\end-to-end.spec.ts:618:42
 ]]>
 </failure>
 <system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-013: Get non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.425">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-014: Update constituency with valid data (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.585">
-<failure message="constituencies.spec.ts:294:9 TC-CONST-014: Update constituency with valid data (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:294:9 › Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-014: Update constituency with valid data (ECP - Valid Class) 
-
-    TypeError: Cannot read properties of undefined (reading '_id')
-
-      312 |
-      313 |       const createData = await createResponse.json();
-    > 314 |       const constituencyId = createData.constituency._id;
-          |                                                      ^
-      315 |
-      316 |       // Then update the constituency
-      317 |       const response = await request.put(
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:314:54
-]]>
-</failure>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-015: Update constituency with invalid data (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.108">
-<failure message="constituencies.spec.ts:335:9 TC-CONST-015: Update constituency with invalid data (ECP - Invalid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:335:9 › Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-015: Update constituency with invalid data (ECP - Invalid Class) 
-
-    TypeError: Cannot read properties of undefined (reading '_id')
-
-      354 |
-      355 |       const createData = await createResponse.json();
-    > 356 |       const constituencyId = createData.constituency._id;
-          |                                                      ^
-      357 |
-      358 |       // Then update with invalid data
-      359 |       const response = await request.put(
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:356:54
-]]>
-</failure>
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-016: Update non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.502">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › DELETE /api/constituencies/:id - Delete Constituency › TC-CONST-017: Delete existing constituency (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.492">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › DELETE /api/constituencies/:id - Delete Constituency › TC-CONST-018: Delete non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.344">
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/bulk - Create Bulk Constituencies › TC-CONST-019: Create bulk constituencies with valid data (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.212">
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/bulk - Create Bulk Constituencies › TC-CONST-020: Create bulk constituencies with empty array (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.025">
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/bulk - Create Bulk Constituencies › TC-CONST-021: Create bulk constituencies with invalid data (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.048">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/:constituency_id/panchayats - Add Panchayats to Constituency › TC-CONST-022: Add panchayats to existing constituency (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.458">
-<failure message="constituencies.spec.ts:534:9 TC-CONST-022: Add panchayats to existing constituency (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\constituencies.spec.ts:534:9 › Constituencies API - Unit Tests › POST /api/constituencies/:constituency_id/panchayats - Add Panchayats to Constituency › TC-CONST-022: Add panchayats to existing constituency (ECP - Valid Class) 
-
-    TypeError: Cannot read properties of undefined (reading '_id')
-
-      552 |
-      553 |       const createData = await createResponse.json();
-    > 554 |       const constituencyId = createData.constituency._id;
-          |                                                      ^
-      555 |
-      556 |       // Then add panchayats
-      557 |       const response = await request.post(
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\constituencies.spec.ts:554:54
-]]>
-</failure>
-</testcase>
-<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/:constituency_id/panchayats - Add Panchayats to Constituency › TC-CONST-023: Add panchayats to non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.044">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
+<![CDATA[Phase 1: Test invalid authentication scenarios
+Phase 2: Test invalid data scenarios
+Phase 3: Test resource not found scenarios
+Phase 4: Test system recovery
 ]]>
 </system-out>
 </testcase>
 </testsuite>
-<testsuite name="unit\issues.spec.ts" timestamp="2025-09-09T07:26:28.319Z" hostname="api-tests" tests="29" failures="0" skipped="0" time="34.238" errors="0">
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-001: Valid issue creation (ECP - Valid Class)" classname="unit\issues.spec.ts" time="2.318">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testsuite name="unit\auth.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="20" failures="0" skipped="0" time="40.387" errors="0">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-001: Valid signup with all required fields (ECP - Valid Class)" classname="unit\auth.spec.ts" time="0.823">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-002: Title too short (BVA - Just below boundary)" classname="unit\issues.spec.ts" time="0.793">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-002: Invalid email format (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.047">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-003: Title at minimum boundary (BVA - At boundary)" classname="unit\issues.spec.ts" time="2.314">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-003: Password too short (BVA - Just below boundary)" classname="unit\auth.spec.ts" time="0.025">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-004: Title too long (BVA - Just above boundary)" classname="unit\issues.spec.ts" time="0.626">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-004: Password at minimum boundary (BVA - At boundary)" classname="unit\auth.spec.ts" time="1.722">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-005: Detail too short (BVA - Just below boundary)" classname="unit\issues.spec.ts" time="1.056">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-005: Name too short (BVA - Just below boundary)" classname="unit\auth.spec.ts" time="0.084">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-006: Detail at minimum boundary (BVA - At boundary)" classname="unit\issues.spec.ts" time="1.806">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-006: Name at minimum boundary (BVA - At boundary)" classname="unit\auth.spec.ts" time="1.921">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-007: Locality too short (BVA - Just below boundary)" classname="unit\issues.spec.ts" time="1.289">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-007: Missing required fields (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.079">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-008: Anonymous issue creation (ECP - Valid Class)" classname="unit\issues.spec.ts" time="1.667">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/signup/email - Email Signup › TC-AUTH-008: Duplicate email signup (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="3.353">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-009: Missing required fields (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.6">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-009: Valid login credentials (ECP - Valid Class)" classname="unit\auth.spec.ts" time="4.446">
 </testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-010: Unauthenticated request (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.191">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-010: Invalid email format (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.178">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-011: Get all issues without filters (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.472">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-011: Wrong password (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="3.97">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-012: Get issues with valid status filter (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.086">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-012: Non-existent user (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.297">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-013: Get issues with invalid status filter (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.206">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/login/email - Email Login › TC-AUTH-013: Missing credentials (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.26">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-014: Get issues with pagination (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.322">
+<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-014: Valid authenticated request (ECP - Valid Class)" classname="unit\auth.spec.ts" time="6.094">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-015: Get issues with invalid pagination (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.205">
+<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-015: Missing authorization header (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.119">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-016: Get issues with date range filter (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.251">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-016: Invalid token format (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.119">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-017: Get issues with invalid date range (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.213">
+<testcase name="Authentication API - Unit Tests › GET /api/auth/me - Get Current User Profile › TC-AUTH-017: Malformed authorization header (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="0.187">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues/:id - Get Issue by ID › TC-ISSUE-018: Get existing issue by valid ID (ECP - Valid Class)" classname="unit\issues.spec.ts" time="2.598">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-018: Valid password change (ECP - Valid Class)" classname="unit\auth.spec.ts" time="9.276">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues/:id - Get Issue by ID › TC-ISSUE-019: Get issue with invalid ID format (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.047">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-019: Wrong current password (ECP - Invalid Class)" classname="unit\auth.spec.ts" time="4.252">
 </testcase>
-<testcase name="Issues API - Unit Tests › GET /api/issues/:id - Get Issue by ID › TC-ISSUE-020: Get non-existent issue (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.28">
-</testcase>
-<testcase name="Issues API - Unit Tests › PUT /api/issues/:id - Update Issue › TC-ISSUE-021: Update issue with valid data (ECP - Valid Class)" classname="unit\issues.spec.ts" time="3.143">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Issues API - Unit Tests › PUT /api/issues/:id - Update Issue › TC-ISSUE-022: Update issue with invalid data (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="1.362">
-</testcase>
-<testcase name="Issues API - Unit Tests › PUT /api/issues/:id - Update Issue › TC-ISSUE-023: Update non-existent issue (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.597">
-</testcase>
-<testcase name="Issues API - Unit Tests › PATCH /api/issues/:id/status - Update Issue Status › TC-ISSUE-024: Update status with valid status (ECP - Valid Class)" classname="unit\issues.spec.ts" time="1.413">
-</testcase>
-<testcase name="Issues API - Unit Tests › PATCH /api/issues/:id/status - Update Issue Status › TC-ISSUE-025: Update status with invalid status (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="2.377">
-</testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues/:id/feedback - Add Feedback › TC-ISSUE-026: Add feedback with valid data (ECP - Valid Class)" classname="unit\issues.spec.ts" time="3.726">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
-</testcase>
-<testcase name="Issues API - Unit Tests › POST /api/issues/:id/feedback - Add Feedback › TC-ISSUE-027: Add feedback with invalid satisfaction score (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="1.665">
-</testcase>
-<testcase name="Issues API - Unit Tests › DELETE /api/issues/:id - Delete Issue › TC-ISSUE-028: Delete existing issue (ECP - Valid Class)" classname="unit\issues.spec.ts" time="1.454">
-</testcase>
-<testcase name="Issues API - Unit Tests › DELETE /api/issues/:id - Delete Issue › TC-ISSUE-029: Delete non-existent issue (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="1.161">
+<testcase name="Authentication API - Unit Tests › POST /api/auth/change-password - Change Password › TC-AUTH-020: New password too short (BVA - Just below boundary)" classname="unit\auth.spec.ts" time="3.135">
 </testcase>
 </testsuite>
-<testsuite name="unit\upvotes.spec.ts" timestamp="2025-09-09T07:26:28.319Z" hostname="api-tests" tests="16" failures="4" skipped="0" time="24.865" errors="0">
-<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-001: Add upvote to existing issue (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="2.403">
-<failure message="upvotes.spec.ts:36:9 TC-UPVOTE-001: Add upvote to existing issue (ECP - Valid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\upvotes.spec.ts:36:9 › Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-001: Add upvote to existing issue (ECP - Valid Class) 
-
-    Error: expect(received).toContain(expected) // indexOf
-
-    Expected substring: "upvoted"
-    Received string:    "Upvote added successfully"
-
-      52 |       const responseData = await response.json();
-      53 |       expect(responseData).toHaveProperty("message");
-    > 54 |       expect(responseData.message).toContain("upvoted");
-         |                                    ^
-      55 |     });
-      56 |
-      57 |     test("TC-UPVOTE-002: Add upvote to non-existent issue (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\upvotes.spec.ts:54:36
-]]>
-</failure>
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testsuite name="unit\constituencies.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="23" failures="0" skipped="0" time="12.713" errors="0">
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-001: Valid constituency creation (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.611">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-002: Add upvote to non-existent issue (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.55">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-002: Name too short (BVA - Just below boundary)" classname="unit\constituencies.spec.ts" time="0.202">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-003: Add upvote with invalid issue ID format (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.014">
-<failure message="upvotes.spec.ts:74:9 TC-UPVOTE-003: Add upvote with invalid issue ID format (ECP - Invalid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\upvotes.spec.ts:74:9 › Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-003: Add upvote with invalid issue ID format (ECP - Invalid Class) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 400
-    Received: 500
-
-      86 |       );
-      87 |
-    > 88 |       expect(response.status()).toBe(400);
-         |                                 ^
-      89 |     });
-      90 |
-      91 |     test("TC-UPVOTE-004: Add upvote without authentication (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\upvotes.spec.ts:88:33
-]]>
-</failure>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-003: Name at minimum boundary (BVA - At boundary)" classname="unit\constituencies.spec.ts" time="0.889">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-004: Add upvote without authentication (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.871">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-004: Name too long (BVA - Just above boundary)" classname="unit\constituencies.spec.ts" time="0.276">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-005: Add duplicate upvote (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.67">
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-005: Constituency ID too short (BVA - Just below boundary)" classname="unit\constituencies.spec.ts" time="0.097">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-006: Remove existing upvote (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="2.163">
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-006: Constituency ID at minimum boundary (BVA - At boundary)" classname="unit\constituencies.spec.ts" time="0.527">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-007: Remove non-existent upvote (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="2.366">
-<failure message="upvotes.spec.ts:161:9 TC-UPVOTE-007: Remove non-existent upvote (ECP - Invalid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\upvotes.spec.ts:161:9 › Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-007: Remove non-existent upvote (ECP - Invalid Class) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 404
-    Received: 400
-
-      174 |       );
-      175 |
-    > 176 |       expect(response.status()).toBe(404);
-          |                                 ^
-      177 |     });
-      178 |
-      179 |     test("TC-UPVOTE-008: Remove upvote from non-existent issue (ECP - Invalid Class)", async ({
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\upvotes.spec.ts:176:33
-]]>
-</failure>
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-007: Missing required fields (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.191">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-008: Remove upvote from non-existent issue (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.482">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-008: Unauthorized request (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.188">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-009: Remove upvote without authentication (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.613">
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies - Create Constituency › TC-CONST-009: Duplicate constituency ID (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="1.42">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-010: Check upvote status when user has upvoted (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="1.49">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › GET /api/constituencies - Get All Constituencies › TC-CONST-010: Get all constituencies (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.526">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-011: Check upvote status when user has not upvoted (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="1.134">
+<testcase name="Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-011: Get existing constituency by valid ID (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="1.067">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-012: Check upvote status for non-existent issue (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.024">
+<testcase name="Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-012: Get constituency with invalid ID format (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.26">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-013: Check upvote status without authentication (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.562">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › GET /api/constituencies/:id - Get Constituency by ID › TC-CONST-013: Get non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.382">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-014: Check upvote status with invalid issue ID format (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="0.514">
-<failure message="upvotes.spec.ts:300:9 TC-UPVOTE-014: Check upvote status with invalid issue ID format (ECP - Invalid Class)" type="FAILURE">
-<![CDATA[  [api-tests] › unit\upvotes.spec.ts:300:9 › Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-014: Check upvote status with invalid issue ID format (ECP - Invalid Class) 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: 400
-    Received: 500
-
-      312 |       );
-      313 |
-    > 314 |       expect(response.status()).toBe(400);
-          |                                 ^
-      315 |     });
-      316 |   });
-      317 |
-        at H:\DCS-SEM 9\Minor Project\CitiZen\citiZen-api\tests\unit\upvotes.spec.ts:314:33
-]]>
-</failure>
+<testcase name="Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-014: Update constituency with valid data (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="1.063">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › Upvote Workflow Tests › TC-UPVOTE-015: Complete upvote workflow - add, check, remove (Integration Test)" classname="unit\upvotes.spec.ts" time="0.913">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-015: Update constituency with invalid data (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="1.108">
 </testcase>
-<testcase name="Upvotes API - Unit Tests › Upvote Workflow Tests › TC-UPVOTE-016: Multiple users upvoting same issue (Integration Test)" classname="unit\upvotes.spec.ts" time="2.096">
-<system-out>
-<![CDATA[Setting up test data...
-Test data setup completed
-]]>
-</system-out>
+<testcase name="Constituencies API - Unit Tests › PUT /api/constituencies/:id - Update Constituency › TC-CONST-016: Update non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.344">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › DELETE /api/constituencies/:id - Delete Constituency › TC-CONST-017: Delete existing constituency (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="1.303">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › DELETE /api/constituencies/:id - Delete Constituency › TC-CONST-018: Delete non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.257">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/bulk - Create Bulk Constituencies › TC-CONST-019: Create bulk constituencies with valid data (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.451">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/bulk - Create Bulk Constituencies › TC-CONST-020: Create bulk constituencies with empty array (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.153">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/bulk - Create Bulk Constituencies › TC-CONST-021: Create bulk constituencies with invalid data (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.142">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/:constituency_id/panchayats - Add Panchayats to Constituency › TC-CONST-022: Add panchayats to existing constituency (ECP - Valid Class)" classname="unit\constituencies.spec.ts" time="0.958">
+</testcase>
+<testcase name="Constituencies API - Unit Tests › POST /api/constituencies/:constituency_id/panchayats - Add Panchayats to Constituency › TC-CONST-023: Add panchayats to non-existent constituency (ECP - Invalid Class)" classname="unit\constituencies.spec.ts" time="0.298">
+</testcase>
+</testsuite>
+<testsuite name="unit\issues.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="29" failures="0" skipped="0" time="89.084" errors="0">
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-001: Valid issue creation (ECP - Valid Class)" classname="unit\issues.spec.ts" time="7.237">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-002: Title too short (BVA - Just below boundary)" classname="unit\issues.spec.ts" time="5.744">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-003: Title at minimum boundary (BVA - At boundary)" classname="unit\issues.spec.ts" time="6.569">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-004: Title too long (BVA - Just above boundary)" classname="unit\issues.spec.ts" time="5.37">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-005: Detail too short (BVA - Just below boundary)" classname="unit\issues.spec.ts" time="4.25">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-006: Detail at minimum boundary (BVA - At boundary)" classname="unit\issues.spec.ts" time="4.72">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-007: Locality too short (BVA - Just below boundary)" classname="unit\issues.spec.ts" time="3.853">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-008: Anonymous issue creation (ECP - Valid Class)" classname="unit\issues.spec.ts" time="5.053">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-009: Missing required fields (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.172">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues - Create Issue › TC-ISSUE-010: Unauthenticated request (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.155">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-011: Get all issues without filters (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.821">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-012: Get issues with valid status filter (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.795">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-013: Get issues with invalid status filter (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.165">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-014: Get issues with pagination (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.88">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-015: Get issues with invalid pagination (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.182">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-016: Get issues with date range filter (ECP - Valid Class)" classname="unit\issues.spec.ts" time="0.776">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues - Get All Issues › TC-ISSUE-017: Get issues with invalid date range (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.256">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues/:id - Get Issue by ID › TC-ISSUE-018: Get existing issue by valid ID (ECP - Valid Class)" classname="unit\issues.spec.ts" time="5.259">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues/:id - Get Issue by ID › TC-ISSUE-019: Get issue with invalid ID format (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.195">
+</testcase>
+<testcase name="Issues API - Unit Tests › GET /api/issues/:id - Get Issue by ID › TC-ISSUE-020: Get non-existent issue (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="0.391">
+</testcase>
+<testcase name="Issues API - Unit Tests › PUT /api/issues/:id - Update Issue › TC-ISSUE-021: Update issue with valid data (ECP - Valid Class)" classname="unit\issues.spec.ts" time="4.801">
+</testcase>
+<testcase name="Issues API - Unit Tests › PUT /api/issues/:id - Update Issue › TC-ISSUE-022: Update issue with invalid data (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="4.515">
+</testcase>
+<testcase name="Issues API - Unit Tests › PUT /api/issues/:id - Update Issue › TC-ISSUE-023: Update non-existent issue (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="3.656">
+</testcase>
+<testcase name="Issues API - Unit Tests › PATCH /api/issues/:id/status - Update Issue Status › TC-ISSUE-024: Update status with valid status (ECP - Valid Class)" classname="unit\issues.spec.ts" time="3.727">
+</testcase>
+<testcase name="Issues API - Unit Tests › PATCH /api/issues/:id/status - Update Issue Status › TC-ISSUE-025: Update status with invalid status (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="3.432">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues/:id/feedback - Add Feedback › TC-ISSUE-026: Add feedback with valid data (ECP - Valid Class)" classname="unit\issues.spec.ts" time="4.286">
+</testcase>
+<testcase name="Issues API - Unit Tests › POST /api/issues/:id/feedback - Add Feedback › TC-ISSUE-027: Add feedback with invalid satisfaction score (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="4.15">
+</testcase>
+<testcase name="Issues API - Unit Tests › DELETE /api/issues/:id - Delete Issue › TC-ISSUE-028: Delete existing issue (ECP - Valid Class)" classname="unit\issues.spec.ts" time="4.087">
+</testcase>
+<testcase name="Issues API - Unit Tests › DELETE /api/issues/:id - Delete Issue › TC-ISSUE-029: Delete non-existent issue (ECP - Invalid Class)" classname="unit\issues.spec.ts" time="3.587">
+</testcase>
+</testsuite>
+<testsuite name="unit\upvotes.spec.ts" timestamp="2025-09-16T04:00:41.658Z" hostname="api-tests" tests="16" failures="0" skipped="0" time="52.033" errors="0">
+<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-001: Add upvote to existing issue (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="3.757">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-002: Add upvote to non-existent issue (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.307">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-003: Add upvote with invalid issue ID format (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.27">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-004: Add upvote without authentication (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.593">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › POST /api/upvotes/:issue_id - Add Upvote › TC-UPVOTE-005: Add duplicate upvote (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.549">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-006: Remove existing upvote (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="5.689">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-007: Remove non-existent upvote (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="3.91">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-008: Remove upvote from non-existent issue (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.247">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › DELETE /api/upvotes/:issue_id - Remove Upvote › TC-UPVOTE-009: Remove upvote without authentication (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="6.473">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-010: Check upvote status when user has upvoted (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="3.237">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-011: Check upvote status when user has not upvoted (ECP - Valid Class)" classname="unit\upvotes.spec.ts" time="5.901">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-012: Check upvote status for non-existent issue (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.274">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-013: Check upvote status without authentication (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="2.955">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › GET /api/upvotes/:issue_id/check - Check User Upvote › TC-UPVOTE-014: Check upvote status with invalid issue ID format (ECP - Invalid Class)" classname="unit\upvotes.spec.ts" time="1.26">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › Upvote Workflow Tests › TC-UPVOTE-015: Complete upvote workflow - add, check, remove (Integration Test)" classname="unit\upvotes.spec.ts" time="2.822">
+</testcase>
+<testcase name="Upvotes API - Unit Tests › Upvote Workflow Tests › TC-UPVOTE-016: Multiple users upvoting same issue (Integration Test)" classname="unit\upvotes.spec.ts" time="7.789">
 </testcase>
 </testsuite>
 </testsuites>

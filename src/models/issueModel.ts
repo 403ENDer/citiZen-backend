@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IssueStatus, PriorityLevel, Satisfaction } from "../utils/types";
+import { IssueStatus, PriorityLevel } from "../utils/types";
 
 interface IIssue extends Document {
   title: string;
@@ -10,7 +10,7 @@ interface IIssue extends Document {
   panchayat_id: mongoose.Types.ObjectId;
   ward_no: string;
   department_id?: mongoose.Types.ObjectId;
-  handled_by?: any;
+  handled_by?: mongoose.Types.ObjectId;
   upvoted_by?: mongoose.Types.ObjectId[];
   status: IssueStatus;
   upvotes: number;
@@ -18,7 +18,7 @@ interface IIssue extends Document {
   is_anonymous: boolean;
   attachments?: string;
   feedback?: string;
-  satisfaction_score?: Satisfaction;
+  satisfaction_score?: number;
   created_at: Date;
   completed_at?: Date;
 }
@@ -41,7 +41,7 @@ const IssueSchema = new Schema<IIssue>(
     },
     ward_no: { type: String, required: true },
     department_id: { type: Schema.Types.ObjectId, ref: "Department" },
-    handled_by: { type: Schema.Types.Mixed },
+    handled_by: { type: Schema.Types.ObjectId, ref: "User" },
     upvoted_by: [{ type: Schema.Types.ObjectId, ref: "User" }],
     status: {
       type: String,
@@ -57,7 +57,7 @@ const IssueSchema = new Schema<IIssue>(
     is_anonymous: { type: Boolean, default: false },
     attachments: { type: String },
     feedback: { type: String },
-    satisfaction_score: { type: String, enum: Object.values(Satisfaction) },
+    satisfaction_score: { type: Number, enum: [1, 2, 3, 4, 5] },
     created_at: { type: Date, default: Date.now },
     completed_at: { type: Date },
   },

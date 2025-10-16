@@ -4,8 +4,13 @@ import Constituency from "../models/constituencyModel";
 import Issue from "../models/issueModel";
 import Department from "../models/departmentModel";
 import Panchayat from "../models/panchayatModel";
+import Meeting from "../models/meetingModel";
 import { validateObjectIdParam } from "../utils/validation";
-import { createInternalErrorResponse } from "../utils/response";
+import {
+  createInternalErrorResponse,
+  createErrorResponse,
+  createSuccessResponse,
+} from "../utils/response";
 import { RoleTypes } from "../utils/types";
 
 interface AuthRequest extends Request {
@@ -15,6 +20,233 @@ interface AuthRequest extends Request {
     role: string;
   };
 }
+
+const isValidTime = (t: string): boolean => {
+  // HH:MM 24h
+  return /^([01]\d|2[0-3]):([0-5]\d)$/.test(t);
+};
+
+const stripTime = (d: Date): Date => {
+  const nd = new Date(d);
+  nd.setHours(0, 0, 0, 0);
+  return nd;
+};
+
+// Create meeting
+export const createMeeting = async (req: AuthRequest, res: Response) => {
+  try {
+    const { constituencyId } = req.params;
+    const { meetingName, description, date, time, departments } = req.body;
+    console.log(req.body);
+    const user_id = req.user?.userId;
+
+    if (!user_id) return createErrorResponse(res, 401, "Auth required");
+
+    const user = await userModel.findById(user_id);
+    if (!user) return createErrorResponse(res, 404, "User not found");
+    if (user.role !== RoleTypes.MLASTAFF)
+      return createErrorResponse(res, 403, "MLA role required");
+
+    if (!meetingName || String(meetingName).trim().length < 3) {
+      console.log(1);
+      return createErrorResponse(
+        res,
+        400,
+        "Valid meeting meetingName required"
+      );
+    }
+
+    if (!date || isNaN(Date.parse(date))) {
+      console.log(2);
+      return createErrorResponse(res, 400, "Valid meeting date required");
+    }
+
+    if (!time || !isValidTime(time)) {
+      console.log(3);
+      return createErrorResponse(res, 400, "Time must be HH:MM (24h)");
+    }
+
+    if (!Array.isArray(departments) || departments.length === 0) {
+      console.log(4);
+      return createErrorResponse(res, 400, "At least one department required");
+    }
+
+    // Validate constituency and departments
+    const cons = await Constituency.findById(constituencyId);
+    if (!cons) return createErrorResponse(res, 404, "Constituency not found");
+
+    const deptDocs = await Department.find({ _id: { $in: departments } });
+    if (deptDocs.length !== departments.length)
+      return createErrorResponse(res, 400, "Invalid departments provided");
+
+    // Date cannot be in the past (by day)
+    const meetingDate = stripTime(new Date(date));
+    const today = stripTime(new Date());
+    if (meetingDate.getTime() < today.getTime())
+      return createErrorResponse(
+        res,
+        400,
+        "Meeting date cannot be in the past"
+      );
+
+    const meeting = await Meeting.create({
+      name: String(meetingName).trim(),
+      description,
+      constituency_id: constituencyId,
+      departments,
+      date: meetingDate,
+      time,
+      created_by: user_id,
+    });
+
+    await meeting.populate([
+      { path: "departments", select: "name" },
+      { path: "created_by", select: "name email" },
+    ]);
+
+    return createSuccessResponse(res, 201, {
+      message: "Meeting created successfully",
+      meeting,
+    });
+  } catch (err) {
+    console.error("Create meeting error:", err);
+    return createInternalErrorResponse(res, "Failed to create meeting");
+  }
+};
+
+// List meetings for a constituency
+export const listMeetings = async (req: AuthRequest, res: Response) => {
+  try {
+    const { constituencyId } = req.params;
+    const user_id = req.user?.userId;
+
+    if (!user_id) return createErrorResponse(res, 401, "Auth required");
+
+    const meetings = await Meeting.find({ constituency_id: constituencyId })
+      .sort({ date: 1, time: 1 })
+      .populate([{ path: "departments", select: "name" }]);
+
+    return createSuccessResponse(res, 200, {
+      message: "Meetings retrieved",
+      meetings,
+    });
+  } catch (err) {
+    console.error("List meetings error:", err);
+    return createInternalErrorResponse(res, "Failed to list meetings");
+  }
+};
+
+// Get single meeting
+export const getMeetingById = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user_id = req.user?.userId;
+    if (!user_id) return createErrorResponse(res, 401, "Auth required");
+
+    const meeting = await Meeting.findById(id).populate([
+      { path: "departments", select: "name" },
+      { path: "created_by", select: "name email" },
+    ]);
+    if (!meeting) return createErrorResponse(res, 404, "Meeting not found");
+
+    return createSuccessResponse(res, 200, { meeting });
+  } catch (err) {
+    console.error("Get meeting error:", err);
+    return createInternalErrorResponse(res, "Failed to get meeting");
+  }
+};
+
+// Update meeting
+export const updateMeeting = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { name, description, date, time, departments } = req.body;
+    const user_id = req.user?.userId;
+
+    if (!user_id) return createErrorResponse(res, 401, "Auth required");
+
+    const user = await userModel.findById(user_id);
+    if (!user) return createErrorResponse(res, 404, "User not found");
+    if (user.role !== RoleTypes.MLASTAFF)
+      return createErrorResponse(res, 403, "MLA role required");
+
+    const update: any = {};
+    if (name) {
+      if (String(name).trim().length < 3)
+        return createErrorResponse(res, 400, "Valid meeting name required");
+      update.name = String(name).trim();
+    }
+    if (description !== undefined) update.description = description;
+    if (date) {
+      if (isNaN(Date.parse(date)))
+        return createErrorResponse(res, 400, "Valid meeting date required");
+      const meetingDate = stripTime(new Date(date));
+      const today = stripTime(new Date());
+      if (meetingDate.getTime() < today.getTime())
+        return createErrorResponse(
+          res,
+          400,
+          "Meeting date cannot be in the past"
+        );
+      update.date = meetingDate;
+    }
+    if (time) {
+      if (!isValidTime(time))
+        return createErrorResponse(res, 400, "Time must be HH:MM (24h)");
+      update.time = time;
+    }
+    if (departments) {
+      if (!Array.isArray(departments) || departments.length === 0)
+        return createErrorResponse(
+          res,
+          400,
+          "At least one department required"
+        );
+      const deptDocs = await Department.find({ _id: { $in: departments } });
+      if (deptDocs.length !== departments.length)
+        return createErrorResponse(res, 400, "Invalid departments provided");
+      update.departments = departments;
+    }
+
+    const meeting = await Meeting.findByIdAndUpdate(id, update, {
+      new: true,
+      runValidators: true,
+    }).populate([{ path: "departments", select: "name" }]);
+
+    if (!meeting) return createErrorResponse(res, 404, "Meeting not found");
+
+    return createSuccessResponse(res, 200, {
+      message: "Meeting updated",
+      meeting,
+    });
+  } catch (err) {
+    console.error("Update meeting error:", err);
+    return createInternalErrorResponse(res, "Failed to update meeting");
+  }
+};
+
+// Delete meeting
+export const deleteMeeting = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user_id = req.user?.userId;
+
+    if (!user_id) return createErrorResponse(res, 401, "Auth required");
+
+    const user = await userModel.findById(user_id);
+    if (!user) return createErrorResponse(res, 404, "User not found");
+    if (user.role !== RoleTypes.MLASTAFF)
+      return createErrorResponse(res, 403, "MLA role required");
+
+    const meeting = await Meeting.findByIdAndDelete(id);
+    if (!meeting) return createErrorResponse(res, 404, "Meeting not found");
+
+    return createSuccessResponse(res, 200, { message: "Meeting deleted" });
+  } catch (err) {
+    console.error("Delete meeting error:", err);
+    return createInternalErrorResponse(res, "Failed to delete meeting");
+  }
+};
 
 // Get MLA dashboard data for a specific constituency (computed from existing models only)
 export const getMLADashboard = async (req: AuthRequest, res: Response) => {

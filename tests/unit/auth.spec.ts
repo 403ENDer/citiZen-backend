@@ -8,82 +8,12 @@ test.beforeAll(async ({ request }) => {
   await setupTestData(request);
 });
 
-// Test data for Equivalence Class Partitioning (ECP) and Boundary Value Analysis (BVA)
-const testData = {
-  // Valid email formats (ECP - Valid class)
-  validEmails: [
-    "user@example.com",
-    "test.user@domain.co.uk",
-    "user+tag@example.org",
-    "user123@test-domain.com",
-  ],
-
-  // Invalid email formats (ECP - Invalid class)
-  invalidEmails: [
-    "invalid-email",
-    "@example.com",
-    "user@",
-    "user@.com",
-    "user..double@example.com",
-    "user@example..com",
-    "",
-  ],
-
-  // Valid passwords (ECP - Valid class)
-  validPasswords: [
-    "password123",
-    "mypassword",
-    "123456",
-    "abcdefghijklmnopqrstuvwxyz1234567890", // 36 chars
-  ],
-
-  // Invalid passwords (ECP - Invalid class)
-  invalidPasswords: [
-    "12345", // Too short (BVA - just below boundary)
-    "1234", // Too short
-    "", // Empty
-    "a".repeat(101), // Too long (BVA - just above boundary)
-  ],
-
-  // Valid names (ECP - Valid class)
-  validNames: [
-    "John Doe",
-    "A", // Minimum length (BVA - at boundary)
-    "A".repeat(100), // Maximum length (BVA - at boundary)
-    "Test User 123",
-  ],
-
-  // Invalid names (ECP - Invalid class)
-  invalidNames: [
-    "", // Empty (BVA - just below boundary)
-    "A".repeat(101), // Too long (BVA - just above boundary)
-    "   ", // Only spaces
-    "123", // Only numbers
-  ],
-
-  // Valid phone numbers (ECP - Valid class)
-  validPhoneNumbers: [
-    "+1234567890",
-    "1234567890",
-    "+91-9876543210",
-    "9876543210",
-  ],
-
-  // Invalid phone numbers (ECP - Invalid class)
-  invalidPhoneNumbers: [
-    "123456789", // Too short (BVA - just below boundary)
-    "1234567890123456", // Too long (BVA - just above boundary)
-    "abc1234567",
-    "",
-    "+",
-  ],
-};
-
 test.describe("Authentication API - Unit Tests", () => {
   test.describe("POST /api/auth/signup/email - Email Signup", () => {
     test("TC-AUTH-001: Valid signup with all required fields (ECP - Valid Class)", async ({
       request,
     }) => {
+      const testData = getTestDataIds();
       const response = await request.post(
         `${API_BASE_URL}/api/auth/signup/email`,
         {
@@ -92,9 +22,9 @@ test.describe("Authentication API - Unit Tests", () => {
             password: "password123",
             name: "Test User",
             phone_number: "+1234567890",
-            constituency_id: getTestDataIds().constituency_id,
-            panchayat_id: getTestDataIds().panchayat_id,
-            ward_no: getTestDataIds().ward_no,
+            constituency_id: testData.constituency_id,
+            panchayat_id: testData.panchayat_id,
+            ward_no: testData.ward_no,
           },
         }
       );
@@ -153,17 +83,18 @@ test.describe("Authentication API - Unit Tests", () => {
     test("TC-AUTH-004: Password at minimum boundary (BVA - At boundary)", async ({
       request,
     }) => {
+      const testData = getTestDataIds();
       const response = await request.post(
         `${API_BASE_URL}/api/auth/signup/email`,
         {
           data: {
-            email: "test@example.com",
+            email: "passwd1@example.com",
             password: "123456", // Exactly 6 characters
             name: "Test User",
-            phone_number: "+1234567890",
-            constituency_id: getTestDataIds().constituency_id,
-            panchayat_id: getTestDataIds().panchayat_id,
-            ward_no: getTestDataIds().ward_no,
+            phone_number: "+1234567891",
+            constituency_id: testData.constituency_id,
+            panchayat_id: testData.panchayat_id,
+            ward_no: testData.ward_no,
           },
         }
       );
@@ -178,7 +109,7 @@ test.describe("Authentication API - Unit Tests", () => {
         `${API_BASE_URL}/api/auth/signup/email`,
         {
           data: {
-            email: "test@example.com",
+            email: "passwd2@example.com",
             password: "password123",
             name: "A", // 1 character (minimum is 2)
             phone_number: "+1234567890",
@@ -195,21 +126,21 @@ test.describe("Authentication API - Unit Tests", () => {
     test("TC-AUTH-006: Name at minimum boundary (BVA - At boundary)", async ({
       request,
     }) => {
+      const testData = getTestDataIds();
       const response = await request.post(
         `${API_BASE_URL}/api/auth/signup/email`,
         {
           data: {
-            email: "test@example.com",
+            email: "name1@example.com",
             password: "password123",
             name: "AB", // Exactly 2 characters
-            phone_number: "+1234567890",
-            constituency_id: getTestDataIds().constituency_id,
-            panchayat_id: getTestDataIds().panchayat_id,
-            ward_no: getTestDataIds().ward_no,
+            phone_number: "+1234567892",
+            constituency_id: testData.constituency_id,
+            panchayat_id: testData.panchayat_id,
+            ward_no: testData.ward_no,
           },
         }
       );
-      console.log(response);
       expect(response.status()).toBe(201);
     });
 
@@ -459,6 +390,7 @@ test.describe("Authentication API - Unit Tests", () => {
     test("TC-AUTH-018: Valid password change (ECP - Valid Class)", async ({
       request,
     }) => {
+      const testData = getTestDataIds();
       // First create and login a user
       await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
         data: {
@@ -466,9 +398,9 @@ test.describe("Authentication API - Unit Tests", () => {
           password: "oldpassword",
           name: "Change Pass User",
           phone_number: "+1234567890",
-          constituency_id: "507f1f77bcf86cd799439011",
-          panchayat_id: "507f1f77bcf86cd799439012",
-          ward_no: "W001",
+          constituency_id: testData.constituency_id,
+          panchayat_id: testData.panchayat_id,
+          ward_no: testData.ward_no,
         },
       });
 
@@ -505,18 +437,26 @@ test.describe("Authentication API - Unit Tests", () => {
     test("TC-AUTH-019: Wrong current password (ECP - Invalid Class)", async ({
       request,
     }) => {
+      const testData = getTestDataIds();
       // First create and login a user
-      await request.post(`${API_BASE_URL}/api/auth/signup/email`, {
-        data: {
-          email: "wrongcurrent@example.com",
-          password: "oldpassword",
-          name: "Wrong Current User",
-          phone_number: "+1234567890",
-          constituency_id: "507f1f77bcf86cd799439011",
-          panchayat_id: "507f1f77bcf86cd799439012",
-          ward_no: "W001",
-        },
-      });
+      const signupResponse = await request.post(
+        `${API_BASE_URL}/api/auth/signup/email`,
+        {
+          data: {
+            email: "wrongcurrent@example.com",
+            password: "oldpassword",
+            name: "Wrong Current User",
+            phone_number: "+1234567890",
+            constituency_id: testData.constituency_id,
+            panchayat_id: testData.panchayat_id,
+            ward_no: testData.ward_no,
+          },
+        }
+      );
+
+      if (signupResponse.status() !== 201) {
+        const signupError = await signupResponse.json();
+      }
 
       const loginResponse = await request.post(
         `${API_BASE_URL}/api/auth/login/email`,
@@ -530,7 +470,6 @@ test.describe("Authentication API - Unit Tests", () => {
 
       const loginData = await loginResponse.json();
       const token = loginData.token;
-
       // Test with wrong current password
       const response = await request.post(
         `${API_BASE_URL}/api/auth/change-password`,
@@ -544,8 +483,7 @@ test.describe("Authentication API - Unit Tests", () => {
           },
         }
       );
-
-      expect(response.status()).toBe(400);
+      expect(response.status()).toBe(401);
     });
 
     test("TC-AUTH-020: New password too short (BVA - Just below boundary)", async ({

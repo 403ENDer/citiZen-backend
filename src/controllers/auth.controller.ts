@@ -3,6 +3,9 @@ import { userModel } from "../models/userModel";
 import UserDetails from "../models/userDetailsModel";
 import Constituency from "../models/constituencyModel";
 import Panchayat from "../models/panchayatModel";
+import Department from "../models/departmentModel";
+import DepartmentEmployee from "../models/departmentEmployeeModel";
+
 import {
   generateToken,
   generateGoogleToken,
@@ -46,8 +49,10 @@ interface User {
   constituency_name?: string;
   panchayat_id?: string;
   panchayat_name?: string;
-  ward_id?: string;
+  ward_no?: string;
   ward_name?: string;
+  department_id?: string;
+  department_name?: string;
 }
 
 interface UserDetailsResponse {
@@ -98,8 +103,11 @@ const formatUserData = async (user: any, userDetails?: any): Promise<User> => {
     panchayat_id:
       userDetails?.panchayat_id?._id || userDetails?.panchayat_id || "",
     panchayat_name: userDetails?.panchayat_id?.name || "",
-    ward_id: userDetails?._id || "",
-    ward_name: userDetails?.ward_no || "",
+    ward_no: userDetails?.ward_no || "",
+    ward_name: userDetails?.ward_name || "",
+    department_id:
+      userDetails?.department?._id || userDetails?.department || "",
+    department_name: userDetails?.department?.name || "",
   };
 };
 
@@ -171,10 +179,37 @@ const validateHierarchy = async (
  * Fetch and populate user details
  */
 const fetchUserDetails = async (userId: string) => {
-  return await UserDetails.findOne({ user_id: userId }).populate([
+  // First get the user to check their role
+  const user = await userModel.findById(userId);
+  if (!user) return null;
+
+  let userDetails = await UserDetails.findOne({ user_id: userId }).populate([
     { path: "constituency", select: "name constituency_id" },
     { path: "panchayat_id", select: "name panchayat_id" },
   ]);
+
+  if (!userDetails) return null;
+
+  // Add department information based on user role
+  if (user.role === RoleTypes.DEPT) {
+    const department = await Department.findOne({ head_id: userId });
+    if (department) {
+      userDetails = userDetails.toObject();
+      userDetails.department = department;
+    }
+  } else if (user.role === RoleTypes.DEPT_STAFF) {
+    // For dept_staff role, find department through DepartmentEmployee
+
+    const deptEmployee = await DepartmentEmployee.findOne({ user_id: userId });
+    if (deptEmployee) {
+      const department = await Department.findById(deptEmployee.dept_id);
+      if (department) {
+        userDetails = userDetails.toObject();
+        userDetails.department = department;
+      }
+    }
+  }
+  return userDetails;
 };
 
 /**
@@ -408,7 +443,6 @@ export class AuthController {
         token,
         user: await formatUserData(user, userDetails),
       };
-
       createSuccessResponse(res, 200, response);
     } catch (error) {
       console.error("Email login error:", error);

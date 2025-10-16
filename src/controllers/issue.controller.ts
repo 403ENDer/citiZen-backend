@@ -6,12 +6,15 @@ import Panchayat from "../models/panchayatModel";
 import UserDetails from "../models/userDetailsModel";
 import Department from "../models/departmentModel";
 import DepartmentEmployee from "../models/departmentEmployeeModel";
-import { PriorityLevel } from "../utils/types";
+import Feedback from "../models/feedbackModel";
+import { PriorityLevel, RoleTypes } from "../utils/types";
 import { validateObjectIdParam } from "../utils/validation";
 import {
   createValidationErrorResponse,
   createNotFoundErrorResponse,
   createInternalErrorResponse,
+  createSuccessResponse,
+  createErrorResponse,
 } from "../utils/response";
 import { classifyUserQuery } from "../utils/validate_query";
 
@@ -139,55 +142,34 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
     let finalDepartmentId = department_id;
     let aiClassifiedDepartment = null;
     let aiClassificationsArray:
-      | { department: string; email: string | null; subquery: string | null }[]
+      | {
+          department: string;
+          email: string | null;
+          subquery: string | null;
+          departmentId: string | null;
+        }[]
       | null = null;
-
-    console.log("Environment variables check:");
-    console.log("GROQ_API_KEY exists:", !!process.env.GROQ_API_KEY);
-    console.log(
-      "GROQ_API_KEY length:",
-      process.env.GROQ_API_KEY ? process.env.GROQ_API_KEY.length : 0
-    );
 
     if (!department_id) {
       try {
         // Check if GROQ API key is available
         if (!process.env.GROQ_API_KEY) {
-          console.log(
-            "GROQ_API_KEY not found in environment variables. Skipping AI classification."
-          );
           aiClassifiedDepartment =
             "AI classification not available - GROQ API key missing";
         } else {
           // Combine title and detail for classification
           const queryText = `${title}. ${detail}`;
-          console.log("Attempting AI classification for query:", queryText);
-
+          const departments = await Department.find();
           // Get classification result
-          const classification = await classifyUserQuery(queryText);
+          const classification = await classifyUserQuery(
+            queryText,
+            departments
+          );
           aiClassificationsArray = classification.classifications || null;
-          aiClassifiedDepartment =
+          finalDepartmentId =
             aiClassificationsArray && aiClassificationsArray.length > 0
-              ? aiClassificationsArray[0].department
+              ? aiClassificationsArray[0].departmentId
               : null;
-
-          console.log(`AI classified department: ${aiClassifiedDepartment}`);
-
-          // Try to find department by name and set finalDepartmentId
-          if (aiClassifiedDepartment) {
-            const department = await Department.findOne({
-              name: aiClassifiedDepartment,
-            });
-
-            if (department) {
-              finalDepartmentId = department._id;
-              console.log(
-                `Auto-assigned to department: ${aiClassifiedDepartment}`
-              );
-            } else {
-              console.log(`Department not found: ${aiClassifiedDepartment}`);
-            }
-          }
         }
       } catch (error) {
         console.error("Error in automatic department classification:", error);
@@ -206,46 +188,6 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
         });
       }
     }
-
-    // TODO: Uncomment below logic when department verification is needed
-    /*
-    // Handle department logic
-    let finalDepartmentId = department_id;
-    if (!department_id) {
-      try {
-        // Combine title and detail for classification
-        const queryText = `${title}. ${detail}`;
-        
-        // Get classification result
-        const classification = await classifyUserQuery(queryText);
-        
-        // Find department by name
-        const department = await Department.findOne({ 
-          name: classification.classification 
-        });
-        
-        if (department) {
-          finalDepartmentId = department._id;
-          console.log(`Auto-assigned to department: ${classification.classification}`);
-        } else {
-          console.log(`Department not found: ${classification.classification}`);
-        }
-      } catch (error) {
-        console.error("Error in automatic department classification:", error);
-        // Continue without department assignment
-      }
-    } else {
-      // Validate if the provided department exists
-      const department = await Department.findById(department_id);
-      if (!department) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid department ID provided",
-        });
-      }
-    }
-    */
-
     // Set random priority level
     const priority_level = getRandomPriorityLevel();
 
@@ -260,8 +202,9 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
       department_id: finalDepartmentId,
       priority_level,
       is_anonymous,
+      handled_by: null,
       attachments,
-      status: "pending", // Default status
+      status: "pending",
       upvotes: 0,
     });
 
@@ -273,6 +216,7 @@ export const createIssue = async (req: AuthRequest, res: Response) => {
       { path: "constituency_id", select: "name constituency_id" },
       { path: "panchayat_id", select: "name panchayat_id" },
       { path: "department_id", select: "name" },
+      { path: "handled_by", select: "name email" },
     ]);
 
     res.status(201).json({
@@ -375,9 +319,12 @@ export const createBulkIssues = async (req: AuthRequest, res: Response) => {
           try {
             // Combine title and detail for classification
             const queryText = `${title}. ${detail}`;
-
+            const departments = await Department.find();
             // Get classification result
-            const classification = await classifyUserQuery(queryText);
+            const classification = await classifyUserQuery(
+              queryText,
+              departments
+            );
 
             // Find department by name
             const firstDeptName =
@@ -391,9 +338,6 @@ export const createBulkIssues = async (req: AuthRequest, res: Response) => {
 
             if (department) {
               finalDepartmentId = department._id;
-              console.log(`Auto-assigned to department: ${firstDeptName}`);
-            } else {
-              console.log(`Department not found: ${firstDeptName}`);
             }
           } catch (error) {
             console.error(
@@ -540,6 +484,45 @@ export const getAllIssues = async (req: AuthRequest, res: Response) => {
   }
 };
 
+export const getIssueByDepartmentId = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { department_id } = req.params;
+    const { page = 1, limit = 10 } = req.query;
+
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const issues = await Issue.find({ department_id })
+      .populate("constituency_id", "name constituency_id")
+      .populate("panchayat_id", "name panchayat_id")
+      .populate("department_id", "name")
+      .populate("handled_by", "name email")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(Number(limit));
+    res.status(200).json({
+      success: true,
+      message: "Issues retrieved successfully",
+      issues: issues,
+      pagination: {
+        page: Number(page),
+        limit: Number(limit),
+        total: issues.length,
+        pages: Math.ceil(issues.length / Number(limit)),
+      },
+    });
+  } catch (error) {
+    console.error("Get issue by department ID error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
 // Get issue by ID
 export const getIssueById = async (req: AuthRequest, res: Response) => {
   try {
@@ -568,7 +551,7 @@ export const getIssueById = async (req: AuthRequest, res: Response) => {
       issue: issue,
     });
   } catch (error) {
-    console.error("Get issue error:", error);
+    // console.error("Get issue error:", error);
     createInternalErrorResponse(res);
   }
 };
@@ -604,7 +587,6 @@ export const getIssuesByUserId = async (req: AuthRequest, res: Response) => {
       .limit(Number(limit));
 
     const total = await Issue.countDocuments({ user_id });
-
     res.status(200).json({
       success: true,
       message: "Issues retrieved successfully",
@@ -711,36 +693,15 @@ export const updateIssue = async (req: AuthRequest, res: Response) => {
     }
 
     // Only allow users to update their own issues, or admins to update any issue
-    if (issue.user_id.toString() !== user_id && user.role !== "admin") {
+    if (
+      issue.user_id.toString() !== user_id &&
+      user.role !== RoleTypes.ADMIN &&
+      user.role !== RoleTypes.MLASTAFF
+    ) {
       return res.status(403).json({
         success: false,
         message: "You are not authorized to update this issue",
       });
-    }
-
-    // If updating hierarchy fields, validate them
-    if (
-      updateData.constituency_id ||
-      updateData.panchayat_id ||
-      updateData.ward_no
-    ) {
-      const constituency_id =
-        updateData.constituency_id || issue.constituency_id.toString();
-      const panchayat_id =
-        updateData.panchayat_id || issue.panchayat_id.toString();
-      const ward_no = updateData.ward_no || issue.ward_no;
-
-      const hierarchyValidation = await validateHierarchy(
-        constituency_id,
-        panchayat_id,
-        ward_no
-      );
-      if (!hierarchyValidation.isValid) {
-        return res.status(400).json({
-          success: false,
-          message: hierarchyValidation.error,
-        });
-      }
     }
 
     // If updating department, validate it exists
@@ -784,39 +745,64 @@ export const updateIssue = async (req: AuthRequest, res: Response) => {
 export const updateIssueStatus = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, feedback, rating } = req.body;
 
     const user_id = req.user?.userId;
     if (!user_id) {
-      return res.status(401).json({
-        success: false,
-        message: "User authentication required",
-      });
+      return createErrorResponse(res, 401, "User authentication required");
     }
 
     const issue = await Issue.findById(id);
     if (!issue) {
-      return res.status(404).json({
-        success: false,
-        message: "Issue not found",
-      });
+      return createErrorResponse(res, 404, "Issue not found");
     }
 
     // Check if user is authorized to update this issue
     const user = await userModel.findById(user_id);
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: "User not found",
-      });
+      return createErrorResponse(res, 401, "User not found");
     }
 
     // Only allow users to update their own issues, or admins to update any issue
-    if (issue.user_id.toString() !== user_id && user.role !== "admin") {
-      return res.status(403).json({
-        success: false,
-        message: "You are not authorized to update this issue",
+    if (
+      issue.user_id.toString() !== user_id &&
+      (user.role === RoleTypes.ADMIN || user.role === RoleTypes.MLASTAFF)
+    ) {
+      return createErrorResponse(
+        res,
+        403,
+        "You are not authorized to update this issue"
+      );
+    }
+
+    // If resolving issue, validate feedback data
+    if (status === "resolved") {
+      if (!feedback || !rating) {
+        return createErrorResponse(
+          res,
+          400,
+          "Feedback and rating are required when resolving an issue"
+        );
+      }
+
+      // Validate rating
+      if (![1, 2, 3, 4, 5].includes(rating)) {
+        return createErrorResponse(res, 400, "Invalid rating value");
+      }
+
+      // Check if feedback already exists for this issue by this user
+      const existingFeedback = await Feedback.findOne({
+        issue_id: id,
+        user_id: user_id,
       });
+
+      if (existingFeedback) {
+        return createErrorResponse(
+          res,
+          409,
+          "Feedback already submitted for this issue"
+        );
+      }
     }
 
     // Update status and set completed_at if status is resolved
@@ -833,20 +819,110 @@ export const updateIssueStatus = async (req: AuthRequest, res: Response) => {
       { path: "constituency_id", select: "name constituency_id" },
       { path: "panchayat_id", select: "name panchayat_id" },
       { path: "department_id", select: "name" },
+      { path: "handled_by", select: "name email" },
     ]);
 
-    res.status(200).json({
-      success: true,
-      message: "Issue status updated successfully",
-      issue: updatedIssue,
-    });
+    // If resolving issue, create feedback record
+    if (status === "resolved" && feedback && rating) {
+      const feedbackRecord = new Feedback({
+        issue_id: id,
+        user_id: user_id,
+        feedback: feedback,
+        rating: rating,
+      });
+
+      await feedbackRecord.save();
+
+      createSuccessResponse(res, 200, {
+        message: "Issue resolved and feedback submitted successfully",
+        issue: updatedIssue,
+        feedback: {
+          id: feedbackRecord._id,
+          feedback: feedbackRecord.feedback,
+          rating: feedbackRecord.rating,
+          created_at: feedbackRecord.created_at,
+        },
+      });
+    } else {
+      createSuccessResponse(res, 200, {
+        message: "Issue status updated successfully",
+        issue: updatedIssue,
+      });
+    }
   } catch (error) {
     console.error("Update issue status error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Internal server error",
-      error: error instanceof Error ? error.message : "Unknown error",
+    createErrorResponse(res, 500, "Internal server error");
+  }
+};
+
+// Get feedback for an issue
+export const getIssueFeedback = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const user_id = req.user?.userId;
+    if (!user_id) {
+      return createErrorResponse(res, 401, "User authentication required");
+    }
+
+    const issue = await Issue.findById(id);
+    if (!issue) {
+      return createErrorResponse(res, 404, "Issue not found");
+    }
+
+    // Check if user is authorized to view feedback
+    const user = await userModel.findById(user_id);
+    if (!user) {
+      return createErrorResponse(res, 401, "User not found");
+    }
+
+    // Only allow issue creator, admins, or MLA staff to view feedback
+    if (
+      issue.user_id.toString() !== user_id &&
+      user.role !== RoleTypes.ADMIN &&
+      user.role !== RoleTypes.MLASTAFF
+    ) {
+      return createErrorResponse(
+        res,
+        403,
+        "You are not authorized to view feedback for this issue"
+      );
+    }
+
+    const feedback = await Feedback.findOne({ issue_id: id })
+      .populate({
+        path: "user_id",
+        select: "name email",
+      })
+      .populate({
+        path: "issue_id",
+        select: "title status",
+      });
+
+    if (!feedback) {
+      return createErrorResponse(res, 404, "No feedback found for this issue");
+    }
+
+    createSuccessResponse(res, 200, {
+      message: "Feedback retrieved successfully",
+      feedback: {
+        id: feedback._id,
+        feedback: feedback.feedback,
+        rating: feedback.rating,
+        created_at: feedback.created_at,
+        user: {
+          name: feedback.user_id.name,
+          email: feedback.user_id.email,
+        },
+        issue: {
+          title: feedback.issue_id.title,
+          status: feedback.issue_id.status,
+        },
+      },
     });
+  } catch (error) {
+    console.error("Get issue feedback error:", error);
+    createErrorResponse(res, 500, "Internal server error");
   }
 };
 
@@ -962,7 +1038,7 @@ export const addFeedback = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    if (issue.user_id.toString() !== user_id && user.role !== "admin") {
+    if (issue.user_id.toString() !== user_id) {
       return res.status(403).json({
         success: false,
         message: "You are not authorized to add feedback to this issue",

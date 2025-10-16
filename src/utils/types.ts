@@ -11,18 +11,13 @@ export enum IssueStatus {
   IN_PROGRESS = "in_progress",
   RESOLVED = "resolved",
   REJECTED = "rejected",
+  COMPLETED = "completed",
 }
 
 export enum PriorityLevel {
   HIGH = "high",
   NORMAL = "normal",
   LOW = "low",
-}
-
-export enum Satisfaction {
-  GOOD = "good",
-  AVERAGE = "average",
-  POOR = "poor",
 }
 
 export interface JWTPayload {

@@ -3,14 +3,29 @@ import { setupTestData, createTestUser } from "../setup/testData";
 
 const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3333";
 
-// Setup test data before all tests
-test.beforeAll(async ({ request }) => {
-  await setupTestData(request);
-});
+// Global setup seeds data; no per-file setup needed
 
 // Helper function to get auth token
 async function getAuthToken(request: any) {
-  return await createTestUser(request, "issuetest@example.com");
+  // Prefer using seeded MLA user; add small retry loop for stability
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const loginRes = await request.post(
+      `${API_BASE_URL}/api/auth/login/email`,
+      {
+        data: { email: "mla_test@example.com", password: "password123" },
+      }
+    );
+    if (loginRes.status() === 200) {
+      const data = await loginRes.json();
+      return data.token;
+    }
+    await new Promise((r) => setTimeout(r, 200));
+  }
+  // Fallback: create a dedicated test user if login is unavailable
+  const uniqueEmail = `issuetest+${Date.now()}_${Math.random()
+    .toString(36)
+    .slice(2, 8)}@example.com`;
+  return await createTestUser(request, uniqueEmail);
 }
 
 test.describe("Issues API - Unit Tests", () => {
@@ -183,11 +198,10 @@ test.describe("Issues API - Unit Tests", () => {
     test("TC-ISSUE-009: Missing required fields (ECP - Invalid Class)", async ({
       request,
     }) => {
-      const token = await getAuthToken(request);
-
+      // Use mock token to avoid signup/login dependency for this negative test
       const response = await request.post(`${API_BASE_URL}/api/issues`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer mock-citizen-token`,
         },
         data: {
           title: "Test Issue Title",
